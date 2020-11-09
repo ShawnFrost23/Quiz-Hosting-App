@@ -1,65 +1,27 @@
 import React from 'react';
 import './App.css';
-
-const BASE_URL = 'http://localhost:5005';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [loggedIn, setLoggedIn] = React.useState(false);
-
-  const submit = async (e) => {
-    e.preventDefault();
-    const response = await fetch(`${BASE_URL}/admin/auth/login`, {
-      body: {
-        email,
-        password,
-      },
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-    });
-    if (response.status === 200) {
-      setLoggedIn(true);
-    }
-    console.log(response);
-    return false;
-  };
-
-  if (loggedIn) {
-    return (
-      <div className="App">
-        Youre logged in!
-      </div>
-    );
-  }
-
   return (
-    <div className="App">
-      <form onSubmit={submit}>
-        <label htmlFor="email">
-          Email
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            type="text"
-            id="email"
-            value={email}
-          />
-        </label>
-        <br />
-        <label htmlFor="password">
-          Password
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            id="password"
-            value={password}
-          />
-        </label>
-        <br />
-        <input type="submit" value="login" />
-        <br />
-      </form>
-    </div>
+    <Router>
+      <div>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
