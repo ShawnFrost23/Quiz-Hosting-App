@@ -2,6 +2,7 @@ import React from 'react';
 // import { useAlert } from 'react-alert';
 // import './App.css';
 import { useHistory } from 'react-router-dom';
+import { postMethodOptions } from '../options';
 
 const BASE_URL = 'http://localhost:5005';
 
@@ -15,19 +16,21 @@ export default () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${BASE_URL}/admin/auth/login`, {
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: {
-        accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    });
+    const newBody = {
+      email,
+      password,
+    };
+    postMethodOptions.body = JSON.stringify(newBody);
+    const response = await fetch(`${BASE_URL}/admin/auth/login`, postMethodOptions);
+    const response2 = await response.json();
     if (response.status === 200) {
+      const token = `Bearer ${response2.token}`;
+      localStorage.setItem('token', token);
+      console.log(localStorage.getItem('token'));
       history.push('/dashboard');
+    } else {
+      // Yet to implement error handling.
+      alert('Some Error Occured, Try Again!');
     }
     return false;
   };
