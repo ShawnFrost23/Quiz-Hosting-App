@@ -10,7 +10,7 @@ export default () => {
     postMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/auth/logout`, postMethodOptions);
     if (response.status === 200) {
-      history.replace('/login');
+      history.push('/login');
     } else {
       alert('error occured please try again');
     }
