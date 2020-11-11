@@ -7,6 +7,8 @@ import {
 } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Registration from './pages/Registration';
+import Editpage from './pages/Editpage';
 
 function App() {
   return (
@@ -18,6 +20,12 @@ function App() {
           </Route>
           <Route path="/dashboard">
             <Dashboard />
+          </Route>
+          <Route path="/registration">
+            <Registration />
+          </Route>
+          <Route path="/editpage">
+            <Editpage />
           </Route>
         </Switch>
       </div>
