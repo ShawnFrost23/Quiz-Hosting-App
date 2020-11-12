@@ -21,7 +21,7 @@ function Dashboard() {
   const [games, setGames] = React.useState([]);
   
   React.useEffect(() => {
-    const list = getListofGames(setGames);
+    getListofGames(setGames);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
