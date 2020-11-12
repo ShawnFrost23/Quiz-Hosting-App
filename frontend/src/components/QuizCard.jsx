@@ -22,10 +22,8 @@ function QuizCard({id, quizName, thumbnail, setGameFunction}) {
   }
 
   const deleteQuizButtonHandler = async () => {
-    console.log('Delete Quiz Button Pressed');
     deleteMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}`, deleteMethodOptions)
-    console.log(response)
     getListofGames(setGameFunction)
   }
 
