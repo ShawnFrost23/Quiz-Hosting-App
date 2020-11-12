@@ -1,8 +1,12 @@
 /* eslint-disable */
 
 import React from 'react';
+import { deleteMethodOptions } from '../options';
+import { getListofGames } from '../pages/Dashboard';
 
-function QuizCard({id, quizName, thumbnail}) {
+const BASE_URL = 'http://localhost:5005';
+
+function QuizCard({id, quizName, thumbnail, setGameFunction}) {
   const [quizId, setQuizId] = React.useState(id);
   const [quizState, setQuizState] = React.useState(false);
   if (quizState) {
@@ -17,8 +21,12 @@ function QuizCard({id, quizName, thumbnail}) {
     console.log('Edit Quiz Button Pressed');
   }
 
-  const deleteQuizButtonHandler = () => {
+  const deleteQuizButtonHandler = async () => {
     console.log('Delete Quiz Button Pressed');
+    deleteMethodOptions.headers.Authorization = localStorage.getItem('token');
+    const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}`, deleteMethodOptions)
+    console.log(response)
+    getListofGames(setGameFunction)
   }
 
   const startQuizButtonHandler = () => {
