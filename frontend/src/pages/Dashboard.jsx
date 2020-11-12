@@ -7,47 +7,29 @@ import { getMethodOptions } from '../options';
 import QuizCard from '../components/QuizCard';
 
 const BASE_URL = 'http://localhost:5005';
-
-// class Dashboard extends React.Component {
-//   render() {
-//     return (
-//       <>
-//         <NavBar />
-//         <CreateNewGameBar />
-//         <div>
-//           Create Games Appear here
-//        </div>
-//         {games.length > 0 && games.map((quiz) => (
-//          <QuizCard 
-//            quizId={quiz.id}
-//             quizName={quiz.name}
-//             thumbnail={quiz.thumbnail}
-//           />
-//         ))}
-//       </>
-//     );
-//   }
-// }
+const token = localStorage.getItem('token');
+export const getListofGames = async (setGames) => {
+  getMethodOptions.headers.Authorization = token
+  const response = await fetch(`${BASE_URL}/admin/quiz`, getMethodOptions);
+  if (response.status === 200) {
+    const response2 = await response.json();
+    setGames(response2.quizzes);
+  }
+};
 
 function Dashboard() {
   const [games, setGames] = React.useState([]);
-  const token = localStorage.getItem('token');
-  const getListofGames = async () => {
-    getMethodOptions.headers.Authorization = token
-    const response = await fetch(`${BASE_URL}/admin/quiz`, getMethodOptions);
-    if (response.status === 200) {
-      const response2 = await response.json();
-      setGames(response2.quizzes);
-    }
-  };
+  
   React.useEffect(() => {
-    getListofGames();
+    const list = getListofGames(setGames);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
       <NavBar />
-      <CreateNewGameBar />
+      <CreateNewGameBar 
+        setGameFunction={setGames}
+      />
       <div>
         Create Games Appear here
       </div>
@@ -56,6 +38,7 @@ function Dashboard() {
           id={id}
           quizName={name}
           thumbnail={thumbnail}
+          setGameFunction={setGames}
         />
       ))}
     </>
