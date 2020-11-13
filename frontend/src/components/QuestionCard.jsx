@@ -42,7 +42,6 @@ export default function QuestionCard(props) {
     if (response.status === 200) {
       const response2 = await response.json();
       console.log(response2);
-      // setGetData(response2.questions);
       console.log('PLEASE WORK');
     }
   }
@@ -66,6 +65,7 @@ export default function QuestionCard(props) {
     };
     console.log(newBody);
     putQuiz(newBody);
+    window.location.reload(false);
   };
 
   const { id, title, thumbnail } = props;

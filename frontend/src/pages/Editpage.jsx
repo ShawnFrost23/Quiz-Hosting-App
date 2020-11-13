@@ -30,7 +30,6 @@ export default () => {
         console.log(response2);
         // console.log(response2);
         setGetData(response2.questions);
-        // setOrgData(response2);
         const variable = response2.questions;
         console.log(variable);
         localStorage.setItem('quiz', 890035905);

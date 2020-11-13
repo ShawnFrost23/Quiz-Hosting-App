@@ -4,9 +4,6 @@ import React from 'react';
 import EditForm from '../components/QuestionEditForm';
 
 export default () => (
-  // const submit = async (e) => {
-  //   e.preventDefault();
-  // };
   <>
     <div>
       Your Question:
