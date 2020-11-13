@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Registration from './pages/Registration';
 import Editpage from './pages/Editpage';
+import Editquestion from './pages/EditQuestion';
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path="/editpage">
             <Editpage />
+          </Route>
+          <Route path="/editquestion">
+            <Editquestion />
           </Route>
         </Switch>
       </div>
