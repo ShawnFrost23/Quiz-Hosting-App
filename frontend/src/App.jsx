@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import Registration from './pages/Registration';
 import Editpage from './pages/Editpage';
 import Editquestion from './pages/EditQuestion';
+import PlayerJoin from './pages/PlayerJoin';
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path="/editquestion/:id1/:id2">
             <Editquestion />
+          </Route>
+          <Route path="/player">
+            <PlayerJoin />
           </Route>
         </Switch>
       </div>

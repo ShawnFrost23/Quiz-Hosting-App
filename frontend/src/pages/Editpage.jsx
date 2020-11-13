@@ -1,6 +1,4 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
-// import { postMethodOptions } from '../options';
 import { useHistory, useParams } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard';
 
