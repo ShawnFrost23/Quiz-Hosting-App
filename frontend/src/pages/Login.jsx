@@ -9,9 +9,7 @@ const BASE_URL = 'http://localhost:5005';
 export default () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  // const [loggedIn, setLoggedIn] = React.useState(false);
 
-  // const alert = useAlert();
   const history = useHistory();
 
   const submit = async (e) => {
