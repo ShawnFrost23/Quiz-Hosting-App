@@ -14,6 +14,8 @@ export const getListofGames = async (setGames) => {
   if (response.status === 200) {
     const response2 = await response.json();
     setGames(response2.quizzes);
+  } else {
+    console.log('Bad response from server');
   }
 };
 

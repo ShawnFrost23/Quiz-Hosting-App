@@ -17,18 +17,26 @@ function CreateNewGameBar({setGameFunction}) {
       };
       postMethodOptions.body = JSON.stringify(newBody);
       const response = await fetch(`${BASE_URL}/admin/quiz/new`, postMethodOptions)
-      getListofGames(setGameFunction)
+      
+      getListofGames(setGameFunction);
+      setNewGameName('');
+      //document.getElementById('newGameForm').reset();
+      window.location.reload(false)
+    } else {
+      alert('Enter a valid quiz name')
     }
-    
   };
+
   return (
     <div className="createNewGameBar">
-      <input
-        onChange={(e) => setNewGameName(e.target.value)}
-        type="text"
-        placeholder="Enter New Game Name"
-      />
-      <button type="button" onClick={handleNewGameButton}>Create New Game</button>
+      <form id='newGameForm' onSubmit={handleNewGameButton}>
+        <input
+          onChange={(e) => setNewGameName(e.target.value)}
+          type="text"
+          placeholder="Enter New Game Name"
+        />
+        <button type="submit">Create New Game</button>
+      </form>
     </div>
   );
 };

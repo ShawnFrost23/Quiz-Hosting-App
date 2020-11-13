@@ -3,12 +3,15 @@
 import React from 'react';
 import { deleteMethodOptions } from '../options';
 import { getListofGames } from '../pages/Dashboard';
+import { useHistory } from 'react-router-dom';
+
 
 const BASE_URL = 'http://localhost:5005';
 
 function QuizCard({id, quizName, thumbnail, setGameFunction}) {
   const [quizId, setQuizId] = React.useState(id);
   const [quizState, setQuizState] = React.useState(false);
+  const history = useHistory();
   if (quizState) {
     return (
       <p>To be implemented</p>
@@ -25,6 +28,7 @@ function QuizCard({id, quizName, thumbnail, setGameFunction}) {
     deleteMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}`, deleteMethodOptions)
     getListofGames(setGameFunction)
+    window.location.reload(false)
   }
 
   const startQuizButtonHandler = () => {
