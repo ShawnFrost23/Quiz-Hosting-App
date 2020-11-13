@@ -27,10 +27,10 @@ function App() {
           <Route path="/registration">
             <Registration />
           </Route>
-          <Route path="/editpage">
+          <Route path="/editpage/:id1">
             <Editpage />
           </Route>
-          <Route path="/editquestion">
+          <Route path="/editquestion/:id1/:id2">
             <Editquestion />
           </Route>
         </Switch>

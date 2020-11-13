@@ -3,7 +3,7 @@
 import React from 'react';
 import { deleteMethodOptions } from '../options';
 import { getListofGames } from '../pages/Dashboard';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 
 const BASE_URL = 'http://localhost:5005';
@@ -22,6 +22,8 @@ function QuizCard({id, quizName, thumbnail, setGameFunction}) {
 
   const editQuizButtonHandler = () => {
     console.log('Edit Quiz Button Pressed');
+    localStorage.setItem('quizID', id);
+    history.push(`/editpage/:${id}`);
   }
 
   const deleteQuizButtonHandler = async () => {

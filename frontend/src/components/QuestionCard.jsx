@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 export default function QuestionCard(props) {
   const history = useHistory();
   const ber = localStorage.getItem('token');
   const BASE_URL = 'http://localhost:5005';
   const [getData, setGetData] = React.useState([]);
+
+  let { id1 } = useParams();
 
   React.useEffect(() => {
     async function getQuiz() {
@@ -49,7 +51,10 @@ export default function QuestionCard(props) {
   const onClickRoutePage = async (e) => {
     console.log(e.target.id);
     localStorage.setItem('currentq', e.target.id);
-    history.push('/editquestion');
+    console.log(id1);
+    id1 = id1.substring(1);
+    const id2 = e.target.id;
+    history.push(`/editquestion/:${id1}/:${id2}`);
   };
   const DeleteQuestion = async (e) => {
     console.log(e.target.id);

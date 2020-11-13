@@ -1,7 +1,7 @@
 import React from 'react';
 // import { useHistory } from 'react-router-dom';
 // import { postMethodOptions } from '../options';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard';
 
 const BASE_URL = 'http://localhost:5005';
@@ -10,14 +10,16 @@ export default () => {
   const ber = localStorage.getItem('token');
   const [getData, setGetData] = React.useState([]);
   // const [getOrg, setOrgData] = React.useState([]);
+
   console.log(ber);
-  // setGetData([]);
-
+  let { id1 } = useParams();
+  id1 = id1.substring(1);
+  console.log(id1);
   const history = useHistory();
-
   React.useEffect(() => {
     async function renderQuestion() {
-      const response = await fetch(`${BASE_URL}/admin/quiz/890035905`, {
+      // const idy = localStorage.getItem('quizID');
+      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
         headers: {
           accept: 'application/json',
           Authorization: ber,
@@ -32,7 +34,6 @@ export default () => {
         setGetData(response2.questions);
         const variable = response2.questions;
         console.log(variable);
-        localStorage.setItem('quiz', 890035905);
         localStorage.setItem('quizname', response2.name);
         localStorage.setItem('quizthumbnail', response2.thumbnail);
       }
@@ -40,7 +41,7 @@ export default () => {
     if (ber) {
       renderQuestion();
     }
-  }, [ber]);
+  }, [ber, id1]);
 
   function addQuestion() {
     history.push('/editquestion');

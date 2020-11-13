@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 // import AnswerCard from './AnswersCard';
+import { useParams } from 'react-router-dom';
 
 export default function EditForm() {
   // const { id, title, thumbnail } = props;
@@ -14,11 +15,13 @@ export default function EditForm() {
   const [type, setType] = React.useState('');
   const [points, setPoints] = React.useState('');
   const [thumbnail, setThum] = React.useState('');
-  const currentq = localStorage.getItem('currentq');
+  let { id1, id2 } = useParams();
+  id1 = id1.substring(1);
+  id2 = id2.substring(1);
 
   React.useEffect(() => {
     async function getQuiz() {
-      const response = await fetch(`${BASE_URL}/admin/quiz/890035905`, {
+      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
         headers: {
           accept: 'application/json',
           Authorization: ber,
@@ -28,14 +31,14 @@ export default function EditForm() {
       });
       if (response.status === 200) {
         const response2 = await response.json();
-        setGetData(response2.questions[currentq]);
-        setOrgData(response2.questions[currentq].answers);
+        setGetData(response2.questions[id2]);
+        setOrgData(response2.questions[id2].answers);
       }
     }
     if (ber) {
       getQuiz();
     }
-  }, [ber, currentq]);
+  }, [ber, id1, id2]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -89,6 +92,7 @@ export default function EditForm() {
               type="text"
               id="points"
               value={getData.score}
+              onChange={(e) => setPoints(e.target.value)}
             />
           </label>
           <br />
