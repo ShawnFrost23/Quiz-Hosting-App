@@ -43,6 +43,7 @@ export default () => {
 
   function addQuestion() {
     history.push('/editquestion');
+    // Push empty question
   }
 
   return (

@@ -10,11 +10,13 @@ export default function EditForm() {
   const BASE_URL = 'http://localhost:5005';
   const [getData, setGetData] = React.useState([]);
   const [getOrg, setOrgData] = React.useState([]);
+  // const [getAns, setAnsData] = React.useState([]);
   const [title, setQ] = React.useState('');
   const [time, setTime] = React.useState('');
   const [type, setType] = React.useState('');
   const [points, setPoints] = React.useState('');
   const [thumbnail, setThum] = React.useState('');
+  const [ques, setQues] = React.useState('');
   let { id1, id2 } = useParams();
   id1 = id1.substring(1);
   id2 = id2.substring(1);
@@ -31,6 +33,7 @@ export default function EditForm() {
       });
       if (response.status === 200) {
         const response2 = await response.json();
+        setQues(response2);
         setGetData(response2.questions[id2]);
         setOrgData(response2.questions[id2].answers);
       }
@@ -38,22 +41,40 @@ export default function EditForm() {
     if (ber) {
       getQuiz();
     }
-  }, [ber, id1, id2]);
+  }, [ber, id1, id2, getOrg]);
+
+  const collectAnswer = async (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    // console.log(e.target.id);
+    // getOrg[e.target.id].text = e.target.value;
+    // console.log(getOrg);
+  };
 
   const submit = async (e) => {
     e.preventDefault();
     console.log('submit works');
-    const count = localStorage.getItem('length');
-    let id = parseInt(count, 10);
-    id -= 1;
-    const newBody = {
-      id,
-      title,
-      time,
-      type,
-      points,
-    };
-    console.log(newBody);
+    // const count = localStorage.getItem('length');
+    // let id = parseInt(count, 10);
+    // id -= 1;
+    // const newBody = {
+    //   id,
+    //   title,
+    //   time,
+    //   type,
+    //   points,
+    //   getOrg,
+    // };
+    // const b = JSON.stringify(newBody);
+    // console.log(b);
+    // console.log(ques[id2]);
+    console.log(type);
+    ques.questions[id2].id = id2;
+    ques.questions[id2].title = title;
+    ques.questions[id2].time = time;
+    ques.questions[id2].score = points;
+    ques.questions[id2].answers = getOrg;
+    console.log(ques);
   };
   return (
     <>
@@ -64,14 +85,14 @@ export default function EditForm() {
             <input
               type="text"
               id="email"
-              value={getData.title}
+              defaultValue={getData.title}
               onChange={(e) => setQ(e.target.value)}
             />
           </label>
           <br />
           <label htmlFor="password">
             Type
-            <select name="type" id="type" value={getData.type} onChange={(e) => setType(e.target.value)}>
+            <select name="type" id="type" defaultValue={getData.type} onChange={(e) => setType(e.target.value)}>
               <option value="MCQ">Multiple Choice</option>
               <option value="single">Single Choice</option>
             </select>
@@ -82,7 +103,8 @@ export default function EditForm() {
             <input
               type="text"
               id="time"
-              // value={getData.time}
+              defaultValue={getData.time}
+              onChange={(e) => setTime(e.target.value)}
             />
           </label>
           <br />
@@ -91,7 +113,7 @@ export default function EditForm() {
             <input
               type="text"
               id="points"
-              value={getData.score}
+              defaultValue={getData.score}
               onChange={(e) => setPoints(e.target.value)}
             />
           </label>
@@ -116,8 +138,10 @@ export default function EditForm() {
                   Answers
                   <input
                     type="text"
-                    id="answer"
-                    value={q.text}
+                    key={q.id}
+                    id={q.id}
+                    defaultValue={q.text}
+                    onChange={collectAnswer}
                   />
                 </label>
                 <label htmlFor="correct">
@@ -125,7 +149,8 @@ export default function EditForm() {
                   <input
                     type="text"
                     id="password"
-                    value={q.correct}
+                    key={q.id}
+                    defaultValue={q.correct}
                   />
                 </label>
               </div>
