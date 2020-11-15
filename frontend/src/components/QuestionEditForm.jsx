@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-// import AnswerCard from './AnswersCard';
 import { useParams } from 'react-router-dom';
+import AnswerCard from './AnswersCard';
 
 export default function EditForm() {
   // const { id, title, thumbnail } = props;
@@ -10,7 +10,7 @@ export default function EditForm() {
   const BASE_URL = 'http://localhost:5005';
   const [getData, setGetData] = React.useState([]);
   const [getOrg, setOrgData] = React.useState([]);
-  const [getAns, setAnsData] = React.useState([]);
+  // const [getAns, setAnsData] = React.useState([]);
   const [title, setQ] = React.useState('');
   const [time, setTime] = React.useState('');
   const [type, setType] = React.useState('');
@@ -20,6 +20,7 @@ export default function EditForm() {
   let { id1, id2 } = useParams();
   id1 = id1.substring(1);
   id2 = id2.substring(1);
+  const answersArray = [];
 
   React.useEffect(() => {
     async function getQuiz() {
@@ -51,29 +52,26 @@ export default function EditForm() {
   //   console.log(getOrg);
   // };
 
+  function collectAnswer(id, ans) {
+    const newBody = {
+      id,
+      ans,
+    };
+    // console.log(newBody);
+    answersArray.push(newBody);
+    console.log(answersArray);
+  }
+
   const submit = async (e) => {
     e.preventDefault();
     console.log('submit works');
-    // const count = localStorage.getItem('length');
-    // let id = parseInt(count, 10);
-    // id -= 1;
-    // const newBody = {
-    //   id,
-    //   title,
-    //   time,
-    //   type,
-    //   points,
-    //   getOrg,
-    // };
-    // const b = JSON.stringify(newBody);
-    // console.log(b);
-    // console.log(ques[id2]);
     console.log(type, getOrg);
     ques.questions[id2].id = id2;
     ques.questions[id2].title = title;
     ques.questions[id2].time = time;
     ques.questions[id2].score = points;
-    ques.questions[id2].answers = getAns;
+    ques.questions[id2].answers = getOrg;
+    console.log(answersArray);
   };
   return (
     <>
@@ -127,32 +125,34 @@ export default function EditForm() {
           <div>
             {
             getOrg.map((q) => (
-              // <AnswerCard
-              //   key={q.id}
-              //   text={q.text}
-              //   correct={q.correct}
-              // />
-              <div>
-                <label htmlFor="answer">
-                  Answers
-                  <input
-                    type="text"
-                    key={q.id}
-                    id={q.id}
-                    defaultValue={q.text}
-                    onChange={(e) => setAnsData(e.target.value)}
-                  />
-                </label>
-                <label htmlFor="correct">
-                  Correct
-                  <input
-                    type="text"
-                    id="password"
-                    key={q.id}
-                    defaultValue={q.correct}
-                  />
-                </label>
-              </div>
+              <AnswerCard
+                key={q.id}
+                id={q.id}
+                text={q.text}
+                correct={q.correct}
+                func={collectAnswer}
+              />
+              // <div>
+              //   <label htmlFor="answer">
+              //     Answers
+              //     <input
+              //       type="text"
+              //       key={q.id}
+              //       id={q.id}
+              //       defaultValue={q.text}
+              //       onChange={(e) => setAnsData(e.target.value)}
+              //     />
+              //   </label>
+              //   <label htmlFor="correct">
+              //     Correct
+              //     <input
+              //       type="text"
+              //       id="password"
+              //       key={q.id}
+              //       defaultValue={q.correct}
+              //     />
+              //   </label>
+              // </div>
             ))
             }
           </div>
