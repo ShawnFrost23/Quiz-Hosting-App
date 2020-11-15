@@ -10,7 +10,7 @@ export default function EditForm() {
   const BASE_URL = 'http://localhost:5005';
   const [getData, setGetData] = React.useState([]);
   const [getOrg, setOrgData] = React.useState([]);
-  // const [getAns, setAnsData] = React.useState([]);
+  const [getAns, setAnsData] = React.useState([]);
   const [title, setQ] = React.useState('');
   const [time, setTime] = React.useState('');
   const [type, setType] = React.useState('');
@@ -43,13 +43,13 @@ export default function EditForm() {
     }
   }, [ber, id1, id2, getOrg]);
 
-  const collectAnswer = async (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-    // console.log(e.target.id);
-    // getOrg[e.target.id].text = e.target.value;
-    // console.log(getOrg);
-  };
+  // const collectAnswer = async (e) => {
+  //   e.preventDefault();
+  //   console.log(e.target.value);
+  //   console.log(e.target.id);
+  //   getOrg[e.target.id].text = e.target.value;
+  //   console.log(getOrg);
+  // };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -68,13 +68,12 @@ export default function EditForm() {
     // const b = JSON.stringify(newBody);
     // console.log(b);
     // console.log(ques[id2]);
-    console.log(type);
+    console.log(type, getOrg);
     ques.questions[id2].id = id2;
     ques.questions[id2].title = title;
     ques.questions[id2].time = time;
     ques.questions[id2].score = points;
-    ques.questions[id2].answers = getOrg;
-    console.log(ques);
+    ques.questions[id2].answers = getAns;
   };
   return (
     <>
@@ -141,7 +140,7 @@ export default function EditForm() {
                     key={q.id}
                     id={q.id}
                     defaultValue={q.text}
-                    onChange={collectAnswer}
+                    onChange={(e) => setAnsData(e.target.value)}
                   />
                 </label>
                 <label htmlFor="correct">
