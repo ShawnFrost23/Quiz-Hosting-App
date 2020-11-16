@@ -16,7 +16,6 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
   const altText = `Image for quiz Id: ${quizId}`
 
   const editQuizButtonHandler = () => {
-    console.log('Edit Quiz Button Pressed');
     localStorage.setItem('quizID', id);
     history.push(`/editpage/:${id}`);
   }
@@ -24,32 +23,35 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
   const deleteQuizButtonHandler = async () => {
     deleteMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}`, deleteMethodOptions)
-    getListofGames(setGameFunction)
-    window.location.reload(false)
+    if (response.status === 200) {
+      getListofGames(setGameFunction)
+      window.location.reload(false)
+    }
   }
 
   const startQuizButtonHandler = async () => {
-    console.log('Start Quiz Button Pressed');
     postMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}/start`, postMethodOptions);
     if (response.status === 200) {
       setQuizState(true)
-      console.log(response)
     }
   }
 
   const stopQuizButtonHandler = async () => {
-    console.log('Stop Quiz Button Pressed')
     postMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}/end`, postMethodOptions);
     if (response.status === 200) {
-      console.log(response);
       setQuizState(false)
     }
   }
 
-  const advanceQuizButtonHandler = () => {
+  const advanceQuizButtonHandler = async () => {
     console.log('Advance Quiz Button Pressed')
+    postMethodOptions.headers.Authorization = localStorage.getItem('token');
+    const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}/advance`, postMethodOptions);
+    if (response.status !== 200) {
+      setQuizState(false)
+    }
   }
   if (quizState || status) {
     return (
@@ -68,7 +70,6 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
     <div className="quizCard">
       <p>{quizName}</p>
       <img src={thumbnail} alt={altText} />
-      {/* <QuestionsDetailComponent /> */}
       <QuizDetailComponent 
         quizId={quizId}
       />
