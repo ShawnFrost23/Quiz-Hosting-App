@@ -54,26 +54,15 @@ export default function EditForm() {
   const submit = async (e) => {
     e.preventDefault();
     console.log('submit works');
-    // const count = localStorage.getItem('length');
-    // let id = parseInt(count, 10);
-    // id -= 1;
-    // const newBody = {
-    //   id,
-    //   title,
-    //   time,
-    //   type,
-    //   points,
-    //   getOrg,
-    // };
-    // const b = JSON.stringify(newBody);
-    // console.log(b);
-    // console.log(ques[id2]);
+    
     console.log(type, getOrg);
     ques.questions[id2].id = id2;
     ques.questions[id2].title = title;
     ques.questions[id2].time = time;
     ques.questions[id2].score = points;
     ques.questions[id2].answers = getAns;
+    console.log(getAns);
+    cons
   };
   return (
     <>

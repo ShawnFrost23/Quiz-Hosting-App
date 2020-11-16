@@ -5,7 +5,8 @@
 */
 export const quizQuestionPublicReturn = question => {
   console.log('See question: ', question);
-  return question;
+  let ret_ques = {title: question.title, thumbnail: question.thumbnail, score: question.score};
+  return ret_ques;
 };
 
 /*
@@ -35,5 +36,5 @@ export const quizQuestionGetAnswers = question => {
  of the question once it starts. (Seconds)
 */
 export const quizQuestionGetDuration = question => {
-  return 10;
+  return question.time;
 };
