@@ -4,6 +4,7 @@ import React from 'react';
 import { deleteMethodOptions } from '../options';
 import { getListofGames } from '../pages/Dashboard';
 import { useHistory, useParams } from 'react-router-dom';
+import QuizDetailComponent from './QuizDetailComponent';
 
 
 const BASE_URL = 'http://localhost:5005';
@@ -41,6 +42,9 @@ function QuizCard({id, quizName, thumbnail, setGameFunction}) {
       <p>{quizName}</p>
       <img src={thumbnail} alt={altText} />
       {/* <QuestionsDetailComponent /> */}
+      <QuizDetailComponent 
+        quizId={quizId}
+      />
       <button className="editQuizButton" onClick={editQuizButtonHandler}>Edit</button>
       <button className="deleteQuizButton" onClick={deleteQuizButtonHandler}>Delete</button>
       <button className="startQuizButton" onClick={startQuizButtonHandler}>Start Quiz</button>
