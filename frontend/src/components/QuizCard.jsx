@@ -13,12 +13,7 @@ function QuizCard({id, quizName, thumbnail, setGameFunction}) {
   const [quizId, setQuizId] = React.useState(id);
   const [quizState, setQuizState] = React.useState(false);
   const history = useHistory();
-  if (quizState) {
-    return (
-      <p>To be implemented</p>
-      // Add render when quiz is active.
-    );
-  }
+  
   const altText = `Image for quiz Id: ${quizId}`
 
   const editQuizButtonHandler = () => {
@@ -36,6 +31,29 @@ function QuizCard({id, quizName, thumbnail, setGameFunction}) {
 
   const startQuizButtonHandler = () => {
     console.log('Start Quiz Button Pressed');
+    setQuizState(true)
+  }
+
+  const stopQuizButtonHandler = () => {
+    console.log('Stop Quiz Button Pressed')
+    setQuizState(false)
+  }
+
+  const advanceQuizButtonHandler = () => {
+    console.log('Advance Quiz Button Pressed')
+  }
+  if (quizState) {
+    return (
+      <div className="quizCardActive">
+        <p>{quizName}</p>
+        <img src={thumbnail} alt={altText} />
+        <QuizDetailComponent 
+          quizId={quizId}
+        />
+        <button className="advanceQuizButton" onClick={advanceQuizButtonHandler}>Next Question</button>
+        <button className="stopQuizButton" onClick={stopQuizButtonHandler}>Stop Quiz</button>
+    </div>
+    );
   }
   return (
     <div className="quizCard">
