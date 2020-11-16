@@ -35,12 +35,13 @@ function Dashboard() {
       <div>
         Create Games Appear here
       </div>
-      {games.length > 0 && games.map(({id, name, thumbnail}) => (
+      {games.length > 0 && games.map(({id, name, thumbnail, active}) => (
         <QuizCard
           id={id}
           quizName={name}
           thumbnail={thumbnail}
           setGameFunction={setGames}
+          status = {active}
         />
       ))}
     </>
