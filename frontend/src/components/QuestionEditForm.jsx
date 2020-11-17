@@ -10,7 +10,7 @@ export default function EditForm() {
   const BASE_URL = 'http://localhost:5005';
   const [getData, setGetData] = React.useState([]);
   const [getOrg, setOrgData] = React.useState([]);
-  // const [getAns, setAnsData] = React.useState([]);
+  const [getAns, setAnsData] = React.useState([]);
   const [title, setQ] = React.useState('');
   const [time, setTime] = React.useState('');
   const [type, setType] = React.useState('');
@@ -58,8 +58,14 @@ export default function EditForm() {
       ans,
     };
     // console.log(newBody);
-    answersArray.push(newBody);
-    console.log(answersArray);
+    // // answersArray.push(newBody);
+    // // console.log(answersArray);
+    // console.log(id);
+    // getOrg[id].text = ans;
+    // getOrg.push(newBody);
+    setOrgData(getOrg.concat(newBody));
+    setAnsData(getOrg);
+    console.log(getOrg);
   }
 
   const submit = async (e) => {
@@ -72,6 +78,8 @@ export default function EditForm() {
     ques.questions[id2].score = points;
     ques.questions[id2].answers = getOrg;
     console.log(answersArray);
+    console.log(getOrg);
+    console.log(getAns);
   };
   return (
     <>
