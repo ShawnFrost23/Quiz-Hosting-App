@@ -54,7 +54,7 @@ export default function EditForm() {
   const submit = async (e) => {
     e.preventDefault();
     console.log('submit works');
-    
+
     console.log(type, getOrg);
     ques.questions[id2].id = id2;
     ques.questions[id2].title = title;
@@ -62,7 +62,6 @@ export default function EditForm() {
     ques.questions[id2].score = points;
     ques.questions[id2].answers = getAns;
     console.log(getAns);
-    cons
   };
   return (
     <>

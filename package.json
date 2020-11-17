@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.6",
     "prop-types": "^15.7.2",
+    "react-countdown-clock": "^2.7.0",
     "supertest": "^6.0.0",
     "swagger-ui-express": "^4.1.4"
   },
