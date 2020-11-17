@@ -1,8 +1,10 @@
 import React from 'react';
 // import { useAlert } from 'react-alert';
-// import './App.css';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
 import { postMethodOptions } from '../options';
+import '../styles/Login.css';
 
 const BASE_URL = 'http://localhost:5005';
 
@@ -35,30 +37,36 @@ export default () => {
 
   return (
     <div>
-      <form onSubmit={submit}>
-        <label htmlFor="email">
-          Email
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            type="text"
-            id="email"
-            value={email}
-          />
-        </label>
+      <Form onSubmit={submit} className="Login">
+        <Form.Group size="lg">
+          <Form.Label>
+            Email
+            <Form.Control
+              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              id="email"
+              value={email}
+            />
+          </Form.Label>
+          <br />
+        </Form.Group>
+        <Form.Group size="lg">
+          <Form.Label>
+            Password
+            <Form.Control
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              id="password"
+              value={password}
+            />
+          </Form.Label>
+          <br />
+        </Form.Group>
+        <Button block size="lg" type="submit">
+          Login
+        </Button>
         <br />
-        <label htmlFor="password">
-          Password
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            id="password"
-            value={password}
-          />
-        </label>
-        <br />
-        <input type="submit" value="login" />
-        <br />
-      </form>
+      </Form>
     </div>
   );
 };
