@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard';
 
 const BASE_URL = 'http://localhost:5005';
@@ -13,7 +13,7 @@ export default () => {
   let { id1 } = useParams();
   id1 = id1.substring(1);
   console.log(id1);
-  const history = useHistory();
+  // const history = useHistory();
   React.useEffect(() => {
     async function renderQuestion() {
       // const idy = localStorage.getItem('quizID');
@@ -30,8 +30,9 @@ export default () => {
         console.log(response2);
         // console.log(response2);
         setGetData(response2.questions);
-        const variable = response2.questions;
+        const variable = response2.questions.length;
         console.log(variable);
+        localStorage.setItem('numOfQ', variable);
         localStorage.setItem('quizname', response2.name);
         localStorage.setItem('quizthumbnail', response2.thumbnail);
       }
@@ -41,9 +42,78 @@ export default () => {
     }
   }, [ber, id1]);
 
+  async function putQuiz(newBody) {
+    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
+      body: JSON.stringify(newBody),
+      headers: {
+        accept: 'application/json',
+        Authorization: ber,
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+    });
+    if (response.status === 200) {
+      const response2 = await response.json();
+      console.log(response2);
+      console.log('PLEASE WORK');
+    }
+  }
+
   function addQuestion() {
-    history.push('/editquestion');
-    // Push empty question
+    const length = localStorage.getItem('numOfQ');
+    // console.log(getData);
+    console.log(length);
+    const newQ = {
+      id: length,
+      title: 'New Question',
+      thumbnail: null,
+      time: 30,
+      type: 'Single',
+      answers: [
+        {
+          id: 0,
+          text: 'A',
+          correct: 'false',
+        },
+        {
+          id: 1,
+          text: 'B',
+          correct: 'false',
+        },
+        {
+          id: 2,
+          text: ' ',
+          correct: ' ',
+        },
+        {
+          id: 3,
+          text: ' ',
+          correct: ' ',
+        },
+        {
+          id: 4,
+          text: ' ',
+          correct: ' ',
+        },
+        {
+          id: 5,
+          text: ' ',
+          correct: ' ',
+        },
+      ],
+    };
+    const quizName = localStorage.getItem('quizname');
+    const thumbnail = localStorage.getItem('quizthumbnail');
+    console.log(getData);
+    const questions = getData.concat(newQ);
+    console.log(questions);
+    const newBody = {
+      questions,
+      name: quizName,
+      thumbnail,
+    };
+    putQuiz(newBody);
+    // window.location.reload(false);
   }
 
   return (

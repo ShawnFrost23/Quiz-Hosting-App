@@ -1,16 +1,19 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import AnswerCard from './AnswersCard';
+
+const answersArray = [];
+const correctArray = [];
+// let arrayOfAnswer = [];
 
 export default function EditForm() {
   // const { id, title, thumbnail } = props;
-
+  const history = useHistory();
   const ber = localStorage.getItem('token');
   const BASE_URL = 'http://localhost:5005';
   const [getData, setGetData] = React.useState([]);
   const [getOrg, setOrgData] = React.useState([]);
-  const [getAns, setAnsData] = React.useState([]);
   const [title, setQ] = React.useState('');
   const [time, setTime] = React.useState('');
   const [type, setType] = React.useState('');
@@ -20,11 +23,10 @@ export default function EditForm() {
   let { id1, id2 } = useParams();
   id1 = id1.substring(1);
   id2 = id2.substring(1);
-  const answersArray = [];
 
   React.useEffect(() => {
     async function getQuiz() {
-      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
+      const response = await fetch(`${BASE_URL}/admin/quiz/696278918`, {
         headers: {
           accept: 'application/json',
           Authorization: ber,
@@ -42,45 +44,116 @@ export default function EditForm() {
     if (ber) {
       getQuiz();
     }
-  }, [ber, id1, id2, getOrg]);
+  }, [ber, id1, id2, getOrg, ques]);
 
-  // const collectAnswer = async (e) => {
-  //   e.preventDefault();
-  //   console.log(e.target.value);
-  //   console.log(e.target.id);
-  //   getOrg[e.target.id].text = e.target.value;
-  //   console.log(getOrg);
-  // };
+  function backToQ() {
+    history.push(`/editpage/:${id1}`);
+  }
 
-  function collectAnswer(id, ans) {
+  function collectAnswer(id, text, correct) {
     const newBody = {
       id,
-      ans,
+      text,
+      correct,
     };
-    // console.log(newBody);
-    // // answersArray.push(newBody);
-    // // console.log(answersArray);
-    // console.log(id);
-    // getOrg[id].text = ans;
-    // getOrg.push(newBody);
-    setOrgData(getOrg.concat(newBody));
-    setAnsData(getOrg);
-    console.log(getOrg);
+    let isPresent = 0;
+    answersArray.forEach((newAns, index) => {
+      if (newAns.id === id) {
+        answersArray[index].text = text;
+        isPresent = 1;
+      }
+    });
+    if (!isPresent) answersArray.push(newBody);
+  }
+
+  function collectCorrect(id, correct) {
+    const newBody = {
+      id,
+      correct,
+    };
+    let isPresent = 0;
+    correctArray.forEach((newCorrect, index) => {
+      if (newCorrect.id === id) {
+        correctArray[index].correct = correct;
+        isPresent = 1;
+      }
+    });
+    if (!isPresent) correctArray.push(newBody);
+  }
+
+  async function putQuiz(newBody) {
+    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
+      body: JSON.stringify(newBody),
+      headers: {
+        accept: 'application/json',
+        Authorization: ber,
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+    });
+    if (response.status === 200) {
+      const response2 = await response.json();
+      console.log(response2);
+      console.log('PLEASE WORK');
+    }
+  }
+
+  function checkValidity(t, c, a) {
+    if ((t === 'Single') && (c > 1)) {
+      alert('Please have one right answer for Single Choice, Try Again!');
+      return false;
+    }
+    if ((t === 'MCQ') && (c <= 1)) {
+      alert('Please have more than one answer for MCQ, Try Again!');
+      return false;
+    }
+    if (a < 2) {
+      alert('Please have more than two answers');
+      return false;
+    }
+    return true;
   }
 
   const submit = async (e) => {
     e.preventDefault();
-    console.log('submit works');
-    console.log(type, getOrg);
-    ques.questions[id2].id = id2;
-    ques.questions[id2].title = title;
-    ques.questions[id2].time = time;
-    ques.questions[id2].score = points;
-    ques.questions[id2].answers = getOrg;
-    console.log(answersArray);
-    console.log(getOrg);
-    console.log(getAns);
+    let cCount = 0;
+    let aCount = 0;
+    const copyOfState = ques;
+    // Hard Coding this
+    setType('Single');
+    if (title !== '') copyOfState.questions[id2].title = title;
+    if (type !== '') copyOfState.questions[id2].type = type;
+    if (time !== '') copyOfState.questions[id2].time = time;
+    if (points !== '') copyOfState.questions[id2].score = points;
+
+    answersArray.forEach((newAns) => {
+      copyOfState.questions[id2].answers.forEach((oldAns, index) => {
+        if (oldAns.id === newAns.id) copyOfState.questions[id2].answers[index].text = newAns.text;
+        if ((oldAns.id !== '') || (oldAns.id !== ' ')) aCount += 1;
+      });
+    });
+
+    console.log(ques.questions[id2]);
+
+    correctArray.forEach((newCorrect) => {
+      copyOfState.questions[id2].answers.forEach((oldCorrect, index) => {
+        if (oldCorrect.id === newCorrect.id) {
+          copyOfState.questions[id2].answers[index].correct = newCorrect.correct;
+          if ((copyOfState.questions[id2].answers[index].correct === 'true') && (copyOfState.questions[id2].answers[index].text !== ' ')) cCount += 1;
+        }
+      });
+    });
+
+    console.log(cCount);
+    if (checkValidity('MCQ', cCount, aCount)) {
+      putQuiz(ques);
+      console.log('checkValid is true');
+      console.log(cCount, type);
+    }
+    console.log('returns false');
+    // putQuiz(ques);
   };
+
   return (
     <>
       <div>
@@ -97,9 +170,9 @@ export default function EditForm() {
           <br />
           <label htmlFor="password">
             Type
-            <select name="type" id="type" defaultValue={getData.type} onChange={(e) => setType(e.target.value)}>
-              <option value="MCQ">Multiple Choice</option>
-              <option value="single">Single Choice</option>
+            <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
+              <option value="MCQ" onChange={(e) => setType(e.target.value)}>Multiple Choice</option>
+              <option value="Single" onChange={(e) => setType(e.target.value)}>Single Choice</option>
             </select>
           </label>
           <br />
@@ -138,35 +211,16 @@ export default function EditForm() {
                 id={q.id}
                 text={q.text}
                 correct={q.correct}
-                func={collectAnswer}
+                getAns={collectAnswer}
+                getCorrect={collectCorrect}
               />
-              // <div>
-              //   <label htmlFor="answer">
-              //     Answers
-              //     <input
-              //       type="text"
-              //       key={q.id}
-              //       id={q.id}
-              //       defaultValue={q.text}
-              //       onChange={(e) => setAnsData(e.target.value)}
-              //     />
-              //   </label>
-              //   <label htmlFor="correct">
-              //     Correct
-              //     <input
-              //       type="text"
-              //       id="password"
-              //       key={q.id}
-              //       defaultValue={q.correct}
-              //     />
-              //   </label>
-              // </div>
             ))
             }
           </div>
           <br />
           <input type="submit" value="Done" />
           <br />
+          <button type="button" onClick={backToQ}>Back to Questions!</button>
         </form>
       </div>
     </>

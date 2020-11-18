@@ -4,32 +4,35 @@ import PropTypes from 'prop-types';
 
 export default function AnswerCard(props) {
   const {
-    id, text, correct, func,
+    id, text, correct, getAns, getCorrect,
   } = props;
 
   function handleChange(e) {
-    func(id, e.target.value);
+    getAns(id, e.target.value, correct);
   }
+
+  function handleCorrect(e) {
+    getCorrect(id, e.target.value);
+  }
+
   return (
     <div>
       <label htmlFor="answer">
         Answers
         <input
-            // onChange={(e) => setEmail(e.target.value)}
           type="text"
           id={id}
           defaultValue={text}
           onChange={(e) => handleChange(e)}
         />
       </label>
-      <br />
       <label htmlFor="correct">
         Correct
         <input
-            // onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => handleCorrect(e)}
           type="text"
           id={id}
-          value={correct}
+          defaultValue={correct}
         />
       </label>
       <br />
@@ -38,8 +41,9 @@ export default function AnswerCard(props) {
 }
 
 AnswerCard.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
   correct: PropTypes.string.isRequired,
-  func: PropTypes.func.isRequired,
+  getAns: PropTypes.func.isRequired,
+  getCorrect: PropTypes.func.isRequired,
 };
