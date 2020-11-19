@@ -9,10 +9,12 @@ export default function QuestionCard(props) {
   const [getData, setGetData] = React.useState([]);
 
   let { id1 } = useParams();
+  id1 = id1.substring(1);
+  // console.log(id1);
 
   React.useEffect(() => {
     async function getQuiz() {
-      const response = await fetch(`${BASE_URL}/admin/quiz/890035905`, {
+      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
         headers: {
           accept: 'application/json',
           Authorization: ber,
@@ -29,10 +31,10 @@ export default function QuestionCard(props) {
     if (ber) {
       getQuiz();
     }
-  }, [ber]);
+  }, [ber, id1]);
 
   async function putQuiz(newBody) {
-    const response = await fetch(`${BASE_URL}/admin/quiz/890035905`, {
+    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
       body: JSON.stringify(newBody),
       headers: {
         accept: 'application/json',
@@ -51,8 +53,8 @@ export default function QuestionCard(props) {
   const onClickRoutePage = async (e) => {
     console.log(e.target.id);
     localStorage.setItem('currentq', e.target.id);
-    console.log(id1);
-    id1 = id1.substring(1);
+    // console.log(id1);
+    // id1 = id1.substring(1);
     const id2 = e.target.id;
     history.push(`/editquestion/:${id1}/:${id2}`);
   };
