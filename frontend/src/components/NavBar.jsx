@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { postMethodOptions } from '../options';
 
+require('halfmoon/css/halfmoon-variables.min.css');
+
 const BASE_URL = 'http://localhost:5005';
 
 export default () => {

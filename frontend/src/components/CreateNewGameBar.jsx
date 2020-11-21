@@ -3,6 +3,8 @@ import { postMethodOptions } from '../options';
 // eslint-disable-next-line
 import { getListofGames } from '../pages/Dashboard';
 
+require('halfmoon/css/halfmoon-variables.min.css');
+
 const BASE_URL = 'http://localhost:5005';
 
 const token = localStorage.getItem('token');
