@@ -15,16 +15,23 @@ export default () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    postMethodOptions.headers.accept = 'application/json';
-    const newBody = {
-      email,
-      password,
-      name,
-    };
-    postMethodOptions.body = JSON.stringify(newBody);
-    const response = await fetch(`${BASE_URL}/admin/auth/register`, postMethodOptions);
-    if (response.status === 200) {
-      history.push('/login');
+    if (email === '' || name === '' || password === '') {
+      document.getElementById('email').className = 'form-control is-invalid bg-transparent';
+      document.getElementById('password').className = 'form-control is-invalid bg-transparent';
+      document.getElementById('name').className = 'form-control is-invalid bg-transparent';
+      document.getElementById('errorMessage').className = 'position-absolute z-20 w-400 h-200 font-size-24 alert visible alert alert-danger filled';
+    } else {
+      postMethodOptions.headers.accept = 'application/json';
+      const newBody = {
+        email,
+        password,
+        name,
+      };
+      postMethodOptions.body = JSON.stringify(newBody);
+      const response = await fetch(`${BASE_URL}/admin/auth/register`, postMethodOptions);
+      if (response.status === 200) {
+        history.push('/login');
+      }
     }
     return false;
   };
