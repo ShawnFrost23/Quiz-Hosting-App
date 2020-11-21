@@ -36,18 +36,19 @@ function Dashboard() {
         setGameFunction={setGames}
       />
       <div className="w-full h-auto d-flex flex-wrap bg-dark">
-        {games.length > 0 && games.map(({id, name, thumbnail, active}) => (
+        {games.length > 0 && games.map(({
+          id, name, thumbnail, active,
+        }) => (
           <QuizCard
             id={id}
             quizName={name}
             thumbnail={thumbnail}
             setGameFunction={setGames}
-            status = {active}
+            status={active}
             getListofGames={getListofGames}
           />
         ))}
       </div>
-      
     </>
   );
 }
