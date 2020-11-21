@@ -52,8 +52,6 @@ export default function QuestionCard(props) {
   const onClickRoutePage = async (e) => {
     console.log(e.target.id);
     localStorage.setItem('currentq', e.target.id);
-    // console.log(id1);
-    // id1 = id1.substring(1);
     const id2 = e.target.id;
     history.push(`/editquestion/:${id1}/:${id2}`);
   };
@@ -75,15 +73,16 @@ export default function QuestionCard(props) {
   };
 
   const { id, title, thumbnail } = props;
+  const altText = `Picture for question ${id}`;
   return (
     <>
-      <div>{title}</div>
-      <img src={thumbnail} alt="this is a pic" />
-      <button id={id} type="button" onClick={onClickRoutePage}>Edit</button>
-      <button id={id} type="button" onClick={DeleteQuestion}>Delete</button>
-      <br />
+      <div className="d-flex justify-content-around align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-light">
+        <h3>{title}</h3>
+        <img className="w-full h-half border rounded" src={thumbnail} alt={altText} />
+        <button className="w-half btn btn-primary btn-rounded" id={id} type="button" onClick={onClickRoutePage}>Edit</button>
+        <button className="w-half btn btn-danger btn-rounded" id={id} type="button" onClick={DeleteQuestion}>Delete</button>
+      </div>
     </>
-
   );
 }
 
