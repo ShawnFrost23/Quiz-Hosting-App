@@ -37,21 +37,17 @@ export default function QuestionCard(props) {
     if (response.status === 200) {
       const response2 = await response.json();
       console.log(response2);
-      console.log('PLEASE WORK');
     }
   }
 
   const onClickRoutePage = async (e) => {
-    console.log(e.target.id);
     localStorage.setItem('currentq', e.target.id);
     const id2 = e.target.id;
     history.push(`/editquestion/:${id1}/:${id2}`);
   };
   const DeleteQuestion = async (e) => {
-    console.log(e.target.id);
     getData.splice(e.target.id, 1);
     const name = localStorage.getItem('quizname');
-    console.log(name);
     const thumbnail = localStorage.getItem('quizthumbnail');
     const questions = getData;
     const newBody = {
@@ -59,7 +55,6 @@ export default function QuestionCard(props) {
       name,
       thumbnail,
     };
-    console.log(newBody);
     putQuiz(newBody);
     window.location.reload(false);
   };
