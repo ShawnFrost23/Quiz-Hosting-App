@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import { useParams } from 'react-router-dom';
 // import './index.css';
 
-const playerID = localStorage.getItem('player');
+const id1 = localStorage.getItem('player');
 const BASE_URL = 'http://localhost:5005';
 
 export default function AnswerOption(props) {
   const { id, text } = props;
 
   async function putAnswer(ans) {
-    const response = await fetch(`${BASE_URL}/play/${playerID}/question`, {
-      body: JSON.stringify(ans),
+    const response = await fetch(`${BASE_URL}/play/${id1}/answer`, {
+      body: JSON.stringify({
+        answerIds: ans,
+      }),
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
@@ -24,12 +27,9 @@ export default function AnswerOption(props) {
   }
 
   function handleClick(value) {
-    const answerID = [];
-    answerID.push(value);
-    const newBody = {
-      answerID,
-    };
-    putAnswer(newBody);
+    const answerIds = [];
+    answerIds.push(value);
+    putAnswer(answerIds);
   }
 
   return (
@@ -48,6 +48,6 @@ export default function AnswerOption(props) {
 }
 
 AnswerOption.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
 };
