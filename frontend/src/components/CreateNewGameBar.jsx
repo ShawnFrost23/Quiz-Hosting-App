@@ -1,44 +1,49 @@
-/* eslint-disable */
 import React from 'react';
 import { postMethodOptions } from '../options';
+// eslint-disable-next-line
 import { getListofGames } from '../pages/Dashboard';
 
-
 const BASE_URL = 'http://localhost:5005';
+
 const token = localStorage.getItem('token');
-function CreateNewGameBar({setGameFunction}) {
+// eslint-disable-next-line
+function CreateNewGameBar({ setGameFunction }) {
   const [newGameName, setNewGameName] = React.useState('');
-  
+
   const handleNewGameButton = async () => {
-    if(newGameName.length > 0) {
+    if (newGameName.length > 0) {
       postMethodOptions.headers.Authorization = token;
       const newBody = {
-        'name': newGameName,
+        name: newGameName,
       };
       postMethodOptions.body = JSON.stringify(newBody);
-      const response = await fetch(`${BASE_URL}/admin/quiz/new`, postMethodOptions)
-      
-      getListofGames(setGameFunction);
-      setNewGameName('');
-      //document.getElementById('newGameForm').reset();
-      window.location.reload(false)
+      const response = await fetch(`${BASE_URL}/admin/quiz/new`, postMethodOptions);
+      if (response.status === 200) {
+        getListofGames(setGameFunction);
+        setNewGameName('');
+        window.location.reload(false);
+      }
     } else {
-      alert('Enter a valid quiz name')
+      document.getElementById('name').className = 'form-control is-invalid bg-transparent';
+      document.getElementById('name').placeholder = 'Enter a valid name';
     }
+    return false;
   };
 
   return (
-    <div className="createNewGameBar">
-      <form id='newGameForm' onSubmit={handleNewGameButton}>
+    <div className="h-50 d-flex justify-content-center align-items-center flex-row bg-light">
+      <form id="newGameForm" className="w-half">
         <input
           onChange={(e) => setNewGameName(e.target.value)}
           type="text"
+          id="name"
           placeholder="Enter New Game Name"
+          className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
         />
-        <button type="submit">Create New Game</button>
       </form>
+      <button className="btn btn-primary btn-rounded" type="submit" onClick={handleNewGameButton}>Create New Game</button>
     </div>
   );
-};
+}
 
 export default CreateNewGameBar;
