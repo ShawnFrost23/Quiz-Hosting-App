@@ -1,8 +1,9 @@
-/*eslint-disable */
 import React from 'react';
 import { getMethodOptions } from '../options';
 
 const BASE_URL = 'http://localhost:5005';
+
+// eslint-disable-next-line
 function QuizDetailComponent({ quizId }) {
   const [numQuestions, setNumQuestions] = React.useState(0);
   const [totalTime, setTotalTime] = React.useState(0);
