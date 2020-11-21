@@ -17,7 +17,7 @@ import SessionQuestion from './pages/SessionQuestion';
 function App() {
   return (
     <Router>
-      <div>
+      <>
         <Switch>
           <Route exact path="/" render={() => (<Redirect to="/login" />)} />
           <Route path="/login">
@@ -42,7 +42,7 @@ function App() {
             <SessionQuestion />
           </Route>
         </Switch>
-      </div>
+      </>
     </Router>
   );
 }

@@ -6,8 +6,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
 import { deleteMethodOptions, postMethodOptions, getMethodOptions } from '../options';
-// import { getListofGames } from '../pages/Dashboard';
-// import { useHistory, useParams } from 'react-router-dom';
+// eslint-disable-next-line
 import QuizDetailComponent from './QuizDetailComponent';
 
 const BASE_URL = 'http://localhost:5005';
@@ -21,7 +20,6 @@ function QuizCard({
   const [sess, setSess] = React.useState('');
   // eslint-disable-next-line no-new
   new ClipboardJS('.btn');
-  // const [sessionId, setSessionId] = React.useState('');
   const history = useHistory();
   const altText = `Image for quiz Id: ${quizId}`;
 
@@ -47,12 +45,6 @@ function QuizCard({
     await setQuizState(true);
   };
 
-  // function saveToClip() {
-  //   const url = 'wwwnwnoi';
-  //   url.select();
-  //   document.execCommand('copy');
-  // }
-
   const startQuizButtonHandler = async () => {
     postMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}/start`, postMethodOptions);
@@ -77,7 +69,6 @@ function QuizCard({
   };
 
   const advanceQuizButtonHandler = async () => {
-    console.log('Advance Quiz Button Pressed');
     setQuizId(id);
     postMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}/advance`, postMethodOptions);
@@ -85,31 +76,32 @@ function QuizCard({
       setQuizState(false);
     }
   };
+
   if (quizState || status) {
     return (
-      <div className="quizCardActive">
-        <p>{quizName}</p>
-        <img src={thumbnail} alt={altText} />
+      <div className="d-flex justify-content-around align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-primary">
+        <h3>{quizName}</h3>
+        <img className="w-full h-half border rounded" src={thumbnail} alt={altText} />
         <QuizDetailComponent
           quizId={quizId}
         />
-        <button type="button" className="advanceQuizButton" onClick={advanceQuizButtonHandler}>Next Question</button>
-        <button type="button" className="stopQuizButton" onClick={stopQuizButtonHandler}>Stop Quiz</button>
+        <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={advanceQuizButtonHandler} aria-label="Advance Quiz">Next Question</button>
+        <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={stopQuizButtonHandler} aria-label="Stop Quiz">Stop Quiz</button>
       </div>
     );
   }
 
   return (
     <>
-      <div className="quizCard">
-        <p>{quizName}</p>
-        <img src={thumbnail} alt={altText} />
+      <div className="d-flex justify-content-around align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-light">
+        <h3>{quizName}</h3>
+        <img className="w-full h-half border rounded" src={thumbnail} alt={altText} />
         <QuizDetailComponent
           quizId={quizId}
         />
-        <button type="button" className="editQuizButton" onClick={editQuizButtonHandler}>Edit</button>
-        <button type="button" className="deleteQuizButton" onClick={deleteQuizButtonHandler}>Delete</button>
-        <button type="button" className="startQuizButton" onClick={startQuizButtonHandler}>Start Quiz</button>
+        <button className="w-half btn btn-primary btn-rounded my-5" type="button" onClick={editQuizButtonHandler} aria-label="Edit Quiz">Edit</button>
+        <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={deleteQuizButtonHandler} aria-label="Delete Quiz">Delete</button>
+        <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>
