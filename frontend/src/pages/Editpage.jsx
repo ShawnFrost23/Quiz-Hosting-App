@@ -141,8 +141,32 @@ export default () => {
         thumbnail: `data:image/png;base64,${newUrl}`,
       };
       putQuiz(newBody);
+      setGetData(newBody.questions);
+      window.location.reload(false);
     } else {
       alert('Upload a file');
+    }
+  };
+
+  const uploadQuestionButtonHandler = async () => {
+    console.log('Pressed');
+    const postForm = document.forms.questionUpload;
+    const file = postForm.elements.uploadJSON.files[0];
+    const reader = new FileReader();
+    if (file) {
+      reader.readAsText(file);
+      reader.onload = async function () {
+        const newBody = JSON.parse(reader.result);
+        if (newBody.name && newBody.questions.length > 0) {
+          putQuiz(newBody);
+          window.location.reload(false);
+        }
+      };
+      reader.onerror = function () {
+        console.log(reader.error);
+      };
+    } else {
+      alert('Upload a valid JSON File');
     }
   };
 
@@ -157,6 +181,12 @@ export default () => {
           <input name="uploadFile" type="file" />
         </form>
         <button className="btn btn-primary btn-rounded" type="button" onClick={uploadFileButtonHandler} aria-label="Upload Image">Upload Image For Quiz</button>
+      </div>
+      <div className="w-full h-50 d-flex justify-content-center align-items-center bg-light">
+        <form name="questionUpload">
+          <input name="uploadJSON" type="file" />
+        </form>
+        <button className="btn btn-primary btn-rounded" type="button" onClick={uploadQuestionButtonHandler} aria-label="Upload Questions">Upload Questions For Quiz</button>
       </div>
       <div className="w-full h-auto d-flex flex-wrap bg-dark">
         { getData.map((q) => (
