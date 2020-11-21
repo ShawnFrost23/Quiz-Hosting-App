@@ -7,6 +7,8 @@ import QuizDetailComponent from './QuizDetailComponent';
 
 const BASE_URL = 'http://localhost:5005';
 
+require('halfmoon/css/halfmoon-variables.min.css');
+
 // eslint-disable-next-line
 function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
   const [quizId] = React.useState(id);
@@ -66,15 +68,15 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
     );
   }
   return (
-    <div className="quizCard">
-      <p>{quizName}</p>
-      <img src={thumbnail} alt={altText} />
+    <div className="d-flex justify-content-center align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-light">
+      <h3>{quizName}</h3>
+      <img className="w-full h-half border rounded" src={thumbnail} alt={altText} />
       <QuizDetailComponent
         quizId={quizId}
       />
-      <button className="editQuizButton" type="button" onClick={editQuizButtonHandler} aria-label="Edit Quiz">Edit</button>
-      <button className="deleteQuizButton" type="button" onClick={deleteQuizButtonHandler} aria-label="Delete Quiz">Delete</button>
-      <button className="startQuizButton" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
+      <button className="w-half btn btn-primary btn-rounded my-5" type="button" onClick={editQuizButtonHandler} aria-label="Edit Quiz">Edit</button>
+      <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={deleteQuizButtonHandler} aria-label="Delete Quiz">Delete</button>
+      <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
     </div>
   );
 }
