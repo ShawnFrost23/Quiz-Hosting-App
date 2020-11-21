@@ -1,10 +1,9 @@
 import React from 'react';
-// import { useAlert } from 'react-alert';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
 import { postMethodOptions } from '../options';
 import '../styles/Login.css';
+
+require('halfmoon/css/halfmoon-variables.min.css');
 
 const BASE_URL = 'http://localhost:5005';
 
@@ -14,7 +13,7 @@ export default () => {
 
   const history = useHistory();
 
-  const submit = async (e) => {
+  const loginButtonHandler = async (e) => {
     e.preventDefault();
     const newBody = {
       email,
@@ -28,47 +27,67 @@ export default () => {
       localStorage.setItem('token', token);
       console.log(localStorage.getItem('token'));
       history.push('/dashboard');
+      window.location.reload(false);
     } else {
-      // Yet to implement error handling.
-      alert('Some Error Occured, Try Again!');
+      document.getElementById('email').className = 'form-control is-invalid bg-transparent';
+      document.getElementById('password').className = 'form-control is-invalid bg-transparent';
+      document.getElementById('errorMessage').className = 'position-absolute z-20 w-400 h-200 font-size-24 alert visible alert alert-danger filled';
     }
     return false;
   };
 
+  const newRegisterButtonHandler = () => {
+    history.push('/registration');
+  };
+
+  const dismissAlertHandler = () => {
+    document.getElementById('errorMessage').className = 'position-absolute z-20 alert invisible';
+  };
+
   return (
-    <div>
-      <Form onSubmit={submit} className="Login">
-        <Form.Group size="lg">
-          <Form.Label>
+    <div className="position-relative w-full h-full d-flex justify-content-center align-items-center bg-dark">
+      <div id="errorMessage" className="position-absolute z-20 alert invisible" role="alert">
+        <button className="close" data-dismiss="alert" type="button" aria-label="Close">
+          <span onClick={dismissAlertHandler} aria-hidden="true">&times;</span>
+        </button>
+        Invalid Details
+        <br />
+        Try Again!
+      </div>
+      <div className="position-absolute z-0 w-350 h-400 d-flex justify-content-center align-items-center border flex-column rounded shadow-lg bg-light">
+        <form onSubmit={loginButtonHandler} className="w-300 mw-full">
+          <label htmlFor="email" className="w-full h-100">
             Email
-            <Form.Control
+            <input
               onChange={(e) => setEmail(e.target.value)}
               type="text"
               id="email"
               value={email}
+              className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
+              placeholder="Enter Email"
             />
-          </Form.Label>
+          </label>
           <br />
-        </Form.Group>
-        <Form.Group size="lg">
-          <Form.Label>
+          <label htmlFor="password" className="w-full h-100">
             Password
-            <Form.Control
+            <input
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               id="password"
               value={password}
+              className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
+              placeholder="Enter Password"
             />
-          </Form.Label>
+          </label>
+          <div className="w-full d-flex justify-content-center">
+            <input className="w-half btn btn-secondary btn-rounded" type="submit" value="Login" />
+          </div>
           <br />
-        </Form.Group>
-        <Button block size="lg" type="submit">
-          Login
-        </Button>
-        <br />
-      </Form>
+        </form>
+        <div className="w-full d-flex justify-content-center">
+          <button className="w-auto btn btn-secondary btn-rounded" type="button" onClick={newRegisterButtonHandler}>New? Register Now!</button>
+        </div>
+      </div>
     </div>
   );
 };
-
-// export default App;
