@@ -35,7 +35,7 @@ function Dashboard() {
       <CreateNewGameBar
         setGameFunction={setGames}
       />
-      <div className="w-full h-auto h-lg-full d-flex flex-wrap justify-content-center bg-dark">
+      <div className="w-full h-auto d-flex flex-wrap bg-dark">
         {games.length > 0 && games.map(({
           id, name, thumbnail, active,
         }) => (
