@@ -12,7 +12,6 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-alert": "^7.0.2",
-    "react-bootstrap": "^1.4.0",
     "react-countdown": "^2.3.1",
     "react-countdown-clock": "^2.7.0",
     "react-dom": "^17.0.1",
