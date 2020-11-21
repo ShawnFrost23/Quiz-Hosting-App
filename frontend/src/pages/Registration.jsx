@@ -1,8 +1,8 @@
 import React from 'react';
-// import { useAlert } from 'react-alert';
-// import './App.css';
 import { useHistory } from 'react-router-dom';
 import { postMethodOptions } from '../options';
+
+require('halfmoon/css/halfmoon-variables.min.css');
 
 const BASE_URL = 'http://localhost:5005';
 
@@ -13,7 +13,7 @@ export default () => {
 
   const history = useHistory();
 
-  const submit = async (e) => {
+  const registerButtonHandler = async (e) => {
     e.preventDefault();
     if (email === '' || name === '' || password === '') {
       document.getElementById('email').className = 'form-control is-invalid bg-transparent';
@@ -31,6 +31,8 @@ export default () => {
       const response = await fetch(`${BASE_URL}/admin/auth/register`, postMethodOptions);
       if (response.status === 200) {
         history.push('/login');
+      } else {
+        document.getElementById('errorMessage').className = 'position-absolute z-20 w-400 h-200 font-size-24 alert visible alert alert-danger filled';
       }
     }
     return false;
@@ -50,10 +52,12 @@ export default () => {
         <button className="close" data-dismiss="alert" type="button" aria-label="Close">
           <span onClick={dismissAlertHandler} aria-hidden="true">&times;</span>
         </button>
-        Please enter all details
+        Error Occured
+        <br />
+        Try Again
       </div>
       <div className="position-absolute z-0 w-350 h-400 d-flex justify-content-center align-items-center border flex-column rounded shadow-lg bg-light">
-        <form onSubmit={submit} className="w-300 mw-full">
+        <form onSubmit={registerButtonHandler} className="w-300 mw-full">
           <label htmlFor="email" className="w-full">
             Email
             <input
