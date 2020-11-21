@@ -56,14 +56,14 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
 
   if (quizState || status) {
     return (
-      <div className="quizCardActive">
-        <p>{quizName}</p>
-        <img src={thumbnail} alt={altText} />
+      <div className="d-flex justify-content-center align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-primary">
+        <h3>{quizName}</h3>
+        <img className="w-full h-half border rounded" src={thumbnail} alt={altText} />
         <QuizDetailComponent
           quizId={quizId}
         />
-        <button className="advanceQuizButton" type="button" onClick={advanceQuizButtonHandler} aria-label="Advance Quiz">Next Question</button>
-        <button className="stopQuizButton" type="button" onClick={stopQuizButtonHandler} aria-label="Stop Quiz">Stop Quiz</button>
+        <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={advanceQuizButtonHandler} aria-label="Advance Quiz">Next Question</button>
+        <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={stopQuizButtonHandler} aria-label="Stop Quiz">Stop Quiz</button>
       </div>
     );
   }
