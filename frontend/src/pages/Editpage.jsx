@@ -7,13 +7,10 @@ const BASE_URL = 'http://localhost:5005';
 export default () => {
   const ber = localStorage.getItem('token');
   const [getData, setGetData] = React.useState([]);
-  // const [getOrg, setOrgData] = React.useState([]);
 
   console.log(ber);
   let { id1 } = useParams();
   id1 = id1.substring(1);
-  console.log(id1);
-  // const history = useHistory();
   React.useEffect(() => {
     async function renderQuestion() {
       // const idy = localStorage.getItem('quizID');
@@ -27,11 +24,8 @@ export default () => {
       });
       if (response.status === 200) {
         const response2 = await response.json();
-        console.log(response2);
-        // console.log(response2);
         setGetData(response2.questions);
         const variable = response2.questions.length;
-        console.log(variable);
         localStorage.setItem('numOfQ', variable);
         localStorage.setItem('quizname', response2.name);
         localStorage.setItem('quizthumbnail', response2.thumbnail);
@@ -61,8 +55,6 @@ export default () => {
 
   function addQuestion() {
     const length = localStorage.getItem('numOfQ');
-    // console.log(getData);
-    console.log(length);
     const newQ = {
       id: length,
       title: 'New Question',
@@ -82,38 +74,36 @@ export default () => {
         },
         {
           id: 2,
-          text: ' ',
-          correct: ' ',
+          text: '',
+          correct: 'false',
         },
         {
           id: 3,
-          text: ' ',
-          correct: ' ',
+          text: '',
+          correct: 'false',
         },
         {
           id: 4,
-          text: ' ',
-          correct: ' ',
+          text: '',
+          correct: 'false',
         },
         {
           id: 5,
-          text: ' ',
-          correct: ' ',
+          text: '',
+          correct: 'false',
         },
       ],
     };
     const quizName = localStorage.getItem('quizname');
     const thumbnail = localStorage.getItem('quizthumbnail');
-    console.log(getData);
     const questions = getData.concat(newQ);
-    console.log(questions);
     const newBody = {
       questions,
       name: quizName,
       thumbnail,
     };
     putQuiz(newBody);
-    // window.location.reload(false);
+    window.location.reload(false);
   }
 
   return (

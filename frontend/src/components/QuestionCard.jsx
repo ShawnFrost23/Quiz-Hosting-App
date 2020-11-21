@@ -10,7 +10,6 @@ export default function QuestionCard(props) {
 
   let { id1 } = useParams();
   id1 = id1.substring(1);
-  // console.log(id1);
 
   React.useEffect(() => {
     async function getQuiz() {

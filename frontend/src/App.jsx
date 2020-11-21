@@ -12,6 +12,7 @@ import Registration from './pages/Registration';
 import Editpage from './pages/Editpage';
 import Editquestion from './pages/EditQuestion';
 import PlayerJoin from './pages/PlayerJoin';
+import SessionQuestion from './pages/SessionQuestion';
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route path="/player">
             <PlayerJoin />
+          </Route>
+          <Route path="/playsession/:id1">
+            <SessionQuestion />
           </Route>
         </Switch>
       </div>

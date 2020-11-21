@@ -42,6 +42,7 @@ function Dashboard() {
           thumbnail={thumbnail}
           setGameFunction={setGames}
           status = {active}
+          getListofGames={getListofGames}
         />
       ))}
     </>
