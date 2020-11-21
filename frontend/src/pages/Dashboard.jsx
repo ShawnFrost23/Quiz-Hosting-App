@@ -40,6 +40,7 @@ function Dashboard() {
           id, name, thumbnail, active,
         }) => (
           <QuizCard
+            key={id}
             id={id}
             quizName={name}
             thumbnail={thumbnail}
