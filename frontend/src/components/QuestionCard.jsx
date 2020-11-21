@@ -50,18 +50,13 @@ export default function QuestionCard(props) {
   }
 
   const onClickRoutePage = async (e) => {
-    console.log(e.target.id);
     localStorage.setItem('currentq', e.target.id);
-    // console.log(id1);
-    // id1 = id1.substring(1);
     const id2 = e.target.id;
     history.push(`/editquestion/:${id1}/:${id2}`);
   };
   const DeleteQuestion = async (e) => {
-    console.log(e.target.id);
     getData.splice(e.target.id, 1);
     const name = localStorage.getItem('quizname');
-    console.log(name);
     const thumbnail = localStorage.getItem('quizthumbnail');
     const questions = getData;
     const newBody = {
@@ -69,7 +64,6 @@ export default function QuestionCard(props) {
       name,
       thumbnail,
     };
-    console.log(newBody);
     putQuiz(newBody);
     window.location.reload(false);
   };
