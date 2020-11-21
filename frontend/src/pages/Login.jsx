@@ -26,6 +26,7 @@ export default () => {
       localStorage.setItem('token', token);
       console.log(localStorage.getItem('token'));
       history.push('/dashboard');
+      window.location.reload(false);
     } else {
       document.getElementById('email').className = 'form-control is-invalid bg-transparent';
       document.getElementById('password').className = 'form-control is-invalid bg-transparent';
