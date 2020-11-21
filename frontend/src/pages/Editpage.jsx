@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard';
-import { getMethodOptions } from '../options';
+import { getMethodOptions, putMethodOptions } from '../options';
 import NavBar from '../components/NavBar';
 
 const BASE_URL = 'http://localhost:5005';
@@ -33,15 +33,10 @@ export default () => {
   }, [ber, id1]);
 
   async function putQuiz(newBody) {
-    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
-      body: JSON.stringify(newBody),
-      headers: {
-        accept: 'application/json',
-        Authorization: ber,
-        'Content-Type': 'application/json',
-      },
-      method: 'PUT',
-    });
+    putMethodOptions.headers.Authorization = ber;
+    putMethodOptions.headers.accept = 'application/json';
+    putMethodOptions.body = JSON.stringify(newBody);
+    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, putMethodOptions);
     if (response.status === 200) {
       const response2 = await response.json();
       console.log(response2);
@@ -102,11 +97,66 @@ export default () => {
     window.location.reload(false);
   }
 
+  const removePrefix = (string) => {
+    if (string.includes('jpeg')) {
+      return string.replace('data:image/jpeg;base64,', '');
+    // eslint-disable-next-line
+    } else if (string.includes('png')) {
+      return string.replace('data:image/png;base64,', '');
+    // eslint-disable-next-line
+    } else if (string.includes('jpg')) {
+      return string.replace('data:image/jpg;base64,', '');
+    }
+    return '';
+  };
+
+  const fileToDataUrl = (file) => {
+    const validFileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const valid = validFileTypes.find((type) => type === file.type);
+    // Bad data, let's walk away.
+    if (!valid) {
+      throw Error('provided file is not a png, jpg or jpeg image.');
+    }
+    const reader = new FileReader();
+    const dataUrlPromise = new Promise((resolve, reject) => {
+      reader.onerror = reject;
+      reader.onload = () => resolve(reader.result);
+    });
+    reader.readAsDataURL(file);
+    return dataUrlPromise;
+  };
+
+  const uploadFileButtonHandler = async () => {
+    const postForm = document.forms.imageUpload;
+    const file = postForm.elements.uploadFile.files[0];
+    if (file) {
+      const newPromise = await fileToDataUrl(file);
+      const newUrl = await removePrefix(newPromise);
+      getMethodOptions.headers.Authorization = ber;
+      const response2 = await fetch(`${BASE_URL}/admin/quiz/${id1}`, getMethodOptions);
+      const response3 = await response2.json();
+      const newBody = {
+        questions: response3.questions,
+        name: response3.name,
+        thumbnail: `data:image/png;base64,${newUrl}`,
+      };
+      putQuiz(newBody);
+    } else {
+      alert('Upload a file');
+    }
+  };
+
   return (
     <>
       <NavBar />
       <div className="w-full h-50 d-flex justify-content-center align-items-center bg-light">
-        <button className="w-quarter btn btn-primary btn-rounded" type="button" onClick={addQuestion}>Add Questions!</button>
+        <button className="w-quarter btn btn-primary btn-rounded" type="button" onClick={addQuestion} aria-label="Add Question">Add Questions!</button>
+      </div>
+      <div className="w-full h-50 d-flex justify-content-center align-items-center bg-light">
+        <form name="imageUpload">
+          <input name="uploadFile" type="file" />
+        </form>
+        <button className="btn btn-primary btn-rounded" type="button" onClick={uploadFileButtonHandler} aria-label="Upload Image">Upload Image For Quiz</button>
       </div>
       <div className="w-full h-auto d-flex flex-wrap bg-dark">
         { getData.map((q) => (
