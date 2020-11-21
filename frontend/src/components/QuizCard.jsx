@@ -60,8 +60,8 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
         <QuizDetailComponent
           quizId={quizId}
         />
-        <button className="advanceQuizButton" type="button" onClick={advanceQuizButtonHandler}>Next Question</button>
-        <button className="stopQuizButton" type="button" onClick={stopQuizButtonHandler}>Stop Quiz</button>
+        <button className="advanceQuizButton" type="button" onClick={advanceQuizButtonHandler} aria-label="Advance Quiz">Next Question</button>
+        <button className="stopQuizButton" type="button" onClick={stopQuizButtonHandler} aria-label="Stop Quiz">Stop Quiz</button>
       </div>
     );
   }
@@ -72,9 +72,9 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
       <QuizDetailComponent
         quizId={quizId}
       />
-      <button className="editQuizButton" type="button" onClick={editQuizButtonHandler}>Edit</button>
-      <button className="deleteQuizButton" type="button" onClick={deleteQuizButtonHandler}>Delete</button>
-      <button className="startQuizButton" type="button" onClick={startQuizButtonHandler}>Start Quiz</button>
+      <button className="editQuizButton" type="button" onClick={editQuizButtonHandler} aria-label="Edit Quiz">Edit</button>
+      <button className="deleteQuizButton" type="button" onClick={deleteQuizButtonHandler} aria-label="Delete Quiz">Delete</button>
+      <button className="startQuizButton" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
     </div>
   );
 }
