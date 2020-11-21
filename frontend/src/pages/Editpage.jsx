@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard';
+import { getMethodOptions } from '../options';
+import NavBar from '../components/NavBar';
 
 const BASE_URL = 'http://localhost:5005';
 
@@ -8,20 +10,14 @@ export default () => {
   const ber = localStorage.getItem('token');
   const [getData, setGetData] = React.useState([]);
 
-  console.log(ber);
   let { id1 } = useParams();
   id1 = id1.substring(1);
   React.useEffect(() => {
     async function renderQuestion() {
       // const idy = localStorage.getItem('quizID');
-      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
-        headers: {
-          accept: 'application/json',
-          Authorization: ber,
-          'Content-Type': 'application/json',
-        },
-        method: 'GET',
-      });
+      getMethodOptions.headers.Authorization = ber;
+      getMethodOptions.headers.accept = 'application/json';
+      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, getMethodOptions);
       if (response.status === 200) {
         const response2 = await response.json();
         setGetData(response2.questions);
@@ -108,21 +104,21 @@ export default () => {
 
   return (
     <>
-      <div>
-        Your Quiz:
-        {
-          getData.map((q) => (
-            <QuestionCard
-              key={q.id}
-              id={q.id}
-              title={q.title}
-              thumbnail={q.thumbnail}
-            />
-          ))
-        }
+      <NavBar />
+      <div className="w-full h-50 d-flex justify-content-center align-items-center bg-light">
+        <button className="w-quarter btn btn-primary btn-rounded" type="button" onClick={addQuestion}>Add Questions!</button>
+      </div>
+      <div className="w-full h-auto d-flex flex-wrap bg-dark">
+        { getData.map((q) => (
+          <QuestionCard
+            key={q.id}
+            id={q.id}
+            title={q.title}
+            thumbnail={q.thumbnail}
+          />
+        ))}
       </div>
       <br />
-      <button type="button" onClick={addQuestion}>Add Questions!</button>
     </>
   );
 };
