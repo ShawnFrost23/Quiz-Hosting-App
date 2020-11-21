@@ -13,6 +13,7 @@ export default function AnswerCard(props) {
 
   function handleCorrect(e) {
     getCorrect(id, e.target.value);
+    console.log(e.target.value);
   }
 
   return (
@@ -28,12 +29,10 @@ export default function AnswerCard(props) {
       </label>
       <label htmlFor="correct">
         Correct
-        <input
-          onChange={(e) => handleCorrect(e)}
-          type="text"
-          id={id}
-          defaultValue={correct}
-        />
+        <select name="correct" defaultValue={correct} id={id} onChange={(e) => handleCorrect(e)}>
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
       </label>
       <br />
     </div>

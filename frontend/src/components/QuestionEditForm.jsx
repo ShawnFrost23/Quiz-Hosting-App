@@ -44,7 +44,8 @@ export default function EditForm() {
     if (ber) {
       getQuiz();
     }
-  }, [ber, id1, id2, getOrg, ques]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function backToQ() {
     history.push(`/editpage/:${id1}`);
@@ -76,6 +77,7 @@ export default function EditForm() {
       if (newCorrect.id === id) {
         correctArray[index].correct = correct;
         isPresent = 1;
+        getOrg[id].correct = correct;
       }
     });
     if (!isPresent) correctArray.push(newBody);
@@ -120,12 +122,12 @@ export default function EditForm() {
     let cCount = 0;
     let aCount = 0;
     const copyOfState = ques;
-    // Hard Coding this
-    setType('Single');
+
     if (title !== '') copyOfState.questions[id2].title = title;
     if (type !== '') copyOfState.questions[id2].type = type;
     if (time !== '') copyOfState.questions[id2].time = time;
     if (points !== '') copyOfState.questions[id2].score = points;
+    if (type !== '') copyOfState.questions[id2].type = type;
 
     answersArray.forEach((newAns) => {
       copyOfState.questions[id2].answers.forEach((oldAns, index) => {
@@ -146,7 +148,7 @@ export default function EditForm() {
     });
 
     console.log(cCount);
-    if (checkValidity('MCQ', cCount, aCount)) {
+    if (checkValidity(type, cCount, aCount)) {
       putQuiz(ques);
       console.log('checkValid is true');
       console.log(cCount, type);
@@ -169,11 +171,11 @@ export default function EditForm() {
             />
           </label>
           <br />
-          <label htmlFor="password">
+          <label htmlFor="type">
             Type
-            <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
-              <option value="MCQ" onChange={(e) => setType(e.target.value)}>Multiple Choice</option>
-              <option value="Single" onChange={(e) => setType(e.target.value)}>Single Choice</option>
+            <select name="type" value={type} id="type" onChange={(e) => setType(e.target.value)}>
+              <option value="MCQ">Multiple Choice</option>
+              <option value="Single">Single Choice</option>
             </select>
           </label>
           <br />
@@ -200,8 +202,9 @@ export default function EditForm() {
           <label htmlFor="thum" value={thumbnail} onChange={(e) => setThum(e.target.files[0])}>
             Thumbnail
             <input
-              type="file"
+              type="url"
               id="thumbnail"
+              defaultValue={getData.thumbnail}
             />
           </label>
           <div>
