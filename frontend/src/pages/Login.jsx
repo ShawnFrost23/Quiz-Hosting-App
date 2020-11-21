@@ -1,6 +1,4 @@
 import React from 'react';
-// import { useAlert } from 'react-alert';
-// import './App.css';
 import { useHistory } from 'react-router-dom';
 import { postMethodOptions } from '../options';
 
@@ -79,7 +77,6 @@ export default () => {
               placeholder="Enter Password"
             />
           </label>
-          <br />
           <div className="w-full d-flex justify-content-center">
             <input className="w-half btn btn-secondary btn-rounded" type="submit" value="Login" />
           </div>
