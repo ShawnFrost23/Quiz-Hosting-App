@@ -1,8 +1,7 @@
-/* eslint-disable */
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-// import Modal from 'react-bootstrap/Modal';
-// import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
 import { deleteMethodOptions, postMethodOptions, getMethodOptions } from '../options';
@@ -41,8 +40,8 @@ function QuizCard({
   };
 
   const handleStartQuiz = async () => {
-    await handleClose();
-    await setQuizState(true);
+    handleClose();
+    setQuizState(true);
   };
 
   const startQuizButtonHandler = async () => {
@@ -53,9 +52,8 @@ function QuizCard({
       const res = await fetch(`${BASE_URL}/admin/quiz/${quizId}`, getMethodOptions);
       if (res.status === 200) {
         const res2 = await res.json();
-        console.log(res2);
         setSess(res2.active);
-        await handleShow();
+        handleShow();
       }
     }
   };
@@ -101,8 +99,8 @@ function QuizCard({
         />
         <button className="w-half btn btn-primary btn-rounded my-5" type="button" onClick={editQuizButtonHandler} aria-label="Edit Quiz">Edit</button>
         <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={deleteQuizButtonHandler} aria-label="Delete Quiz">Delete</button>
-        <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
-        {/* <Modal show={show} onHide={handleClose}>
+        <a href="#modal-1" className="w-half btn btn-success btn-rounded my-5" role="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</a>
+        <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>
               Session ID:
@@ -119,7 +117,7 @@ function QuizCard({
               Save to ClipBoard
             </Button>
           </Modal.Footer>
-        </Modal> */}
+        </Modal>
       </div>
     </>
   );
@@ -130,8 +128,13 @@ export default QuizCard;
 QuizCard.propTypes = {
   id: PropTypes.number.isRequired,
   quizName: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string,
   setGameFunction: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.string,
   getListofGames: PropTypes.func.isRequired,
+};
+
+QuizCard.defaultProps = {
+  thumbnail: '',
+  status: null,
 };
