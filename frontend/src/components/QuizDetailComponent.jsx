@@ -13,10 +13,7 @@ function QuizDetailComponent({ quizId }) {
       const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}`, getMethodOptions);
       const response2 = await response.json();
       setNumQuestions(response2.questions.length);
-      let time = 0;
       response2.questions.forEach((question) => {
-        time += question.time;
-        console.log(`Quiz Time ${time}`);
         setTotalTime(totalTime + question.time);
       });
     }
@@ -24,12 +21,16 @@ function QuizDetailComponent({ quizId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="quizDetails">
-      Total Questions:
-      {numQuestions}
-      <br />
-      Total Time:
-      {totalTime}
+    <div className="w-full d-flex justify-content-around align-items-center">
+      <p className="bg-dark text-white rounded px-5 py-5">
+        Total Questions:
+        {numQuestions}
+      </p>
+      <p className="bg-dark text-white rounded px-5 py-5">
+        Total Time:
+        {totalTime}
+        s
+      </p>
     </div>
   );
 }
