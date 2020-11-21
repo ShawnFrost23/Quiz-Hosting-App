@@ -21,7 +21,7 @@ function QuizDetailComponent({ quizId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="w-full d-flex justify-content-around align-items-center" aria-label="Total quiz questions">
+    <div className="w-full h-50 d-flex justify-content-around align-items-center" aria-label="Total quiz questions">
       <p className="bg-dark text-white rounded px-5 py-5">
         Total Questions:
         {numQuestions}

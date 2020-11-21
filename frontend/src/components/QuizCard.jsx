@@ -56,7 +56,7 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
 
   if (quizState || status) {
     return (
-      <div className="d-flex justify-content-center align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-primary">
+      <div className="d-flex justify-content-around align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-primary">
         <h3>{quizName}</h3>
         <img className="w-full h-half border rounded" src={thumbnail} alt={altText} />
         <QuizDetailComponent
@@ -68,7 +68,7 @@ function QuizCard({id, quizName, thumbnail, setGameFunction, status}) {
     );
   }
   return (
-    <div className="d-flex justify-content-center align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-light">
+    <div className="d-flex justify-content-around align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-light">
       <h3>{quizName}</h3>
       <img className="w-full h-half border rounded" src={thumbnail} alt={altText} />
       <QuizDetailComponent
