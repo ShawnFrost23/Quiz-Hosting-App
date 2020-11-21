@@ -1,8 +1,8 @@
+/* eslint-disable */
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+// import Modal from 'react-bootstrap/Modal';
+// import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
 import { deleteMethodOptions, postMethodOptions, getMethodOptions } from '../options';
@@ -102,7 +102,7 @@ function QuizCard({
         <button className="w-half btn btn-primary btn-rounded my-5" type="button" onClick={editQuizButtonHandler} aria-label="Edit Quiz">Edit</button>
         <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={deleteQuizButtonHandler} aria-label="Delete Quiz">Delete</button>
         <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
-        <Modal show={show} onHide={handleClose}>
+        {/* <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>
               Session ID:
@@ -119,7 +119,7 @@ function QuizCard({
               Save to ClipBoard
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );
