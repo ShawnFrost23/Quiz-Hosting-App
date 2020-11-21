@@ -31,6 +31,7 @@ export default () => {
     } else {
       document.getElementById('email').className = 'form-control is-invalid bg-transparent';
       document.getElementById('password').className = 'form-control is-invalid bg-transparent';
+      document.getElementById('errorMessage').className = 'position-absolute z-20 w-400 h-200 font-size-24 alert visible alert alert-danger filled';
     }
     return false;
   };
@@ -39,9 +40,21 @@ export default () => {
     history.push('/registration');
   };
 
+  const dismissAlertHandler = () => {
+    document.getElementById('errorMessage').className = 'position-absolute z-20 alert invisible';
+  };
+
   return (
-    <div className="w-full h-full d-flex justify-content-center align-items-center bg-dark">
-      <div className="w-350 h-400 d-flex justify-content-center align-items-center border flex-column rounded shadow-lg bg-light">
+    <div className="position-relative w-full h-full d-flex justify-content-center align-items-center bg-dark">
+      <div id="errorMessage" className="position-absolute z-20 alert invisible" role="alert">
+        <button className="close" data-dismiss="alert" type="button" aria-label="Close">
+          <span onClick={dismissAlertHandler} aria-hidden="true">&times;</span>
+        </button>
+        Invalid Details
+        <br />
+        Try Again!
+      </div>
+      <div className="position-absolute z-0 w-350 h-400 d-flex justify-content-center align-items-center border flex-column rounded shadow-lg bg-light">
         <form onSubmit={loginButtonHandler} className="w-300 mw-full">
           <label htmlFor="email" className="w-full h-100">
             Email
