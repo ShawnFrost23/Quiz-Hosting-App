@@ -16,7 +16,7 @@ import PlayerJoin from './pages/PlayerJoin';
 function App() {
   return (
     <Router>
-      <div>
+      <>
         <Switch>
           <Route exact path="/" render={() => (<Redirect to="/login" />)} />
           <Route path="/login">
@@ -38,7 +38,7 @@ function App() {
             <PlayerJoin />
           </Route>
         </Switch>
-      </div>
+      </>
     </Router>
   );
 }
