@@ -1,6 +1,6 @@
+// File Checked
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router-dom';
 
 export default function AnswerCard(props) {
   const {
@@ -13,7 +13,6 @@ export default function AnswerCard(props) {
 
   function handleCorrect(e) {
     getCorrect(id, e.target.value);
-    console.log(e.target.value);
   }
 
   return (
