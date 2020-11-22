@@ -1,3 +1,4 @@
+// File Checked
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { postMethodOptions } from '../options';
@@ -16,7 +17,8 @@ export default () => {
       history.push('/login');
       window.location.reload(false);
     } else {
-      alert('error occured please try again');
+      history.push('/login');
+      window.location.reload(false);
     }
   };
 
@@ -27,8 +29,8 @@ export default () => {
   return (
     <>
       <div className="h-50 d-flex justify-content-center align-items-center bg-dark">
-        <button className="w-quarter btn btn-secondary btn-rounded btn-lg mx-5" type="button" onClick={handleLogOut}>Log Out</button>
-        <button className="w-quarter btn btn-secondary btn-rounded btn-lg mx-5" type="button" onClick={handleDashBoard}>Dashboard</button>
+        <button className="w-quarter btn btn-secondary btn-rounded btn-lg mx-5" type="button" onClick={handleLogOut} aria-label="Log Out">Log Out</button>
+        <button className="w-quarter btn btn-secondary btn-rounded btn-lg mx-5" type="button" onClick={handleDashBoard} aria-label="Dashboard">Dashboard</button>
       </div>
     </>
   );
