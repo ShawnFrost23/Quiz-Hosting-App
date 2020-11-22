@@ -1,3 +1,4 @@
+// File Checked
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard';
@@ -40,7 +41,6 @@ export default () => {
     if (response.status === 200) {
       const response2 = await response.json();
       console.log(response2);
-      console.log('PLEASE WORK');
     }
   }
 
@@ -149,7 +149,6 @@ export default () => {
   };
 
   const uploadQuestionButtonHandler = async () => {
-    console.log('Pressed');
     const postForm = document.forms.questionUpload;
     const file = postForm.elements.uploadJSON.files[0];
     const reader = new FileReader();
