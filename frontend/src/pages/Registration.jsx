@@ -68,6 +68,7 @@ export default () => {
               value={email}
               placeholder="Enter Email"
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
+              aria-label="Enter Email"
             />
           </label>
           <br />
@@ -81,6 +82,7 @@ export default () => {
               value={password}
               placeholder="Enter Password"
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
+              aria-label="Enter Password"
             />
           </label>
           <br />
@@ -94,15 +96,16 @@ export default () => {
               value={name}
               placeholder="Enter Name"
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
+              aria-label="Enter Name"
             />
           </label>
           <div className="w-full d-flex justify-content-center">
-            <input className="w-half btn btn-secondary btn-rounded" type="submit" value="Register" />
+            <input className="w-half btn btn-secondary btn-rounded" type="submit" value="Register" aria-label="Register" />
           </div>
           <br />
         </form>
         <div className="w-full d-flex justify-content-center">
-          <button className="w-auto btn btn-secondary btn-rounded" type="button" onClick={loginNowButtonHandler}>Login Now!</button>
+          <button className="w-auto btn btn-secondary btn-rounded" type="button" onClick={loginNowButtonHandler} aria-label="Login">Login Now!</button>
         </div>
       </div>
     </div>
