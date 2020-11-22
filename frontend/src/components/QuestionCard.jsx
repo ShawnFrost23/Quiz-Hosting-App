@@ -49,10 +49,7 @@ export default function QuestionCard(props) {
     let index = 0;
     let index2 = 0;
     getData.forEach((question) => {
-      console.log(question.id);
-      console.log(e.target.id);
       if (question.id === e.target.id) {
-        console.log('here');
         index2 = index;
       }
       index += 1;
