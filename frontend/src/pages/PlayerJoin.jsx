@@ -18,9 +18,8 @@ export default () => {
     };
     postMethodOptions.body = JSON.stringify(newBody);
     const response = await fetch(`${BASE_URL}/play/join/${session}`, postMethodOptions);
-    // const response2 = await response.json();
+
     if (response.status === 200) {
-      // history.push('/dashboard');
       const response2 = await response.json();
       console.log('Worked success');
       console.log(response2.playerId);
