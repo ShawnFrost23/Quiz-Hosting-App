@@ -21,6 +21,7 @@ export default () => {
   const [ansRight, setAnsRight] = React.useState([]);
   const timerReset = React.useRef(null);
   const timerStart = React.useRef(null);
+  // eslint-disable-next-line
   const [show, setShow] = React.useState(false);
   const [nextAns, setNextAns] = React.useState(false);
   const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -81,28 +82,28 @@ export default () => {
             onComplete={myCallback}
           /> */}
           <Timer
-              initialTime={questions.time * 1000}
-              direction="backward"
-              checkpoints={[
-                {
-                  time: 0,
-                  callback: () => myPoll(),
-                },
-              ]}
-            >
-              {({ reset, start }) => {
-                timerReset.current = reset;
-                timerStart.current = start;
-                return (
-                  <h4 className="font-size-20 font-weight-bold">
-                    Time left:
-                    {' '}
-                    <Timer.Seconds />
-                    s
-                  </h4>
-                );
-              }}
-            </Timer>
+            initialTime={questions.time * 1000}
+            direction="backward"
+            checkpoints={[
+              {
+                time: 0,
+                callback: () => myPoll(),
+              },
+            ]}
+          >
+            {({ reset, start }) => {
+              timerReset.current = reset;
+              timerStart.current = start;
+              return (
+                <h4 className="font-size-20 font-weight-bold">
+                  Time left:
+                  {' '}
+                  <Timer.Seconds />
+                  s
+                </h4>
+              );
+            }}
+          </Timer>
         </div>
         <div className="d-flex justify-content-center h-full bg-dark-light py-10 px-10">
           <div className="d-flex flex-column h-500 w-500 bg-light px-5 py-5 border rounded">
