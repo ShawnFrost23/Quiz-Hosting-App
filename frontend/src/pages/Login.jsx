@@ -1,3 +1,4 @@
+// File Checked
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { postMethodOptions } from '../options';
@@ -25,7 +26,6 @@ export default () => {
     if (response.status === 200) {
       const token = `Bearer ${response2.token}`;
       localStorage.setItem('token', token);
-      console.log(localStorage.getItem('token'));
       history.push('/dashboard');
       window.location.reload(false);
     } else {
@@ -65,6 +65,7 @@ export default () => {
               value={email}
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
               placeholder="Enter Email"
+              aria-label="Enter Email"
             />
           </label>
           <br />
@@ -77,15 +78,16 @@ export default () => {
               value={password}
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
               placeholder="Enter Password"
+              aria-label="Enter Password"
             />
           </label>
           <div className="w-full d-flex justify-content-center">
-            <input className="w-half btn btn-secondary btn-rounded" type="submit" value="Login" />
+            <input className="w-half btn btn-secondary btn-rounded" type="submit" value="Login" aria-label="Login" />
           </div>
           <br />
         </form>
         <div className="w-full d-flex justify-content-center">
-          <button className="w-auto btn btn-secondary btn-rounded" type="button" onClick={newRegisterButtonHandler}>New? Register Now!</button>
+          <button className="w-auto btn btn-secondary btn-rounded" type="button" onClick={newRegisterButtonHandler} aria-label="Register">New? Register Now!</button>
         </div>
       </div>
     </div>
