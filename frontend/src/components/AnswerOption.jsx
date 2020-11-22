@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { putMethodOptions } from '../options';
 // import { useParams } from 'react-router-dom';
 // import './index.css';
 
@@ -10,18 +11,12 @@ export default function AnswerOption(props) {
   const { id, text } = props;
 
   async function putAnswer(ans) {
-    const response = await fetch(`${BASE_URL}/play/${id1}/answer`, {
-      body: JSON.stringify({
-        answerIds: ans,
-      }),
-      headers: {
-        accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'PUT',
+    putMethodOptions.body = JSON.stringify({
+      answerIds: ans,
     });
+    putMethodOptions.headers.accept = 'application/json';
+    const response = await fetch(`${BASE_URL}/play/${id1}/answer`, putMethodOptions);
     if (response.status === 200) {
-      // All g
       console.log('yay');
     }
   }
@@ -31,20 +26,21 @@ export default function AnswerOption(props) {
     answerIds.push(value);
     putAnswer(answerIds);
   }
-
-  return (
-    <li className="answerOption">
-      <input
+  if (text.length > 0) {
+    return (
+      <button
         type="button"
-        className="radioCustomButton"
+        className="w-half btn btn-primary btn-rounded"
         name="radioGroup"
         id={id}
-        value={text}
         onClick={(e) => handleClick(e.target.id)}
-        // checked
-      />
-    </li>
-  );
+        aria-label={text}
+      >
+        {text}
+      </button>
+    );
+  }
+  return null;
 }
 
 AnswerOption.propTypes = {
