@@ -46,7 +46,18 @@ export default function QuestionCard(props) {
     history.push(`/editquestion/:${id1}/:${id2}`);
   };
   const DeleteQuestion = async (e) => {
-    getData.splice(e.target.id, 1);
+    let index = 0;
+    let index2 = 0;
+    getData.forEach((question) => {
+      console.log(question.id);
+      console.log(e.target.id);
+      if (question.id === e.target.id) {
+        console.log('here');
+        index2 = index;
+      }
+      index += 1;
+    });
+    getData.splice(index2, 1);
     const name = localStorage.getItem('quizname');
     const thumbnail = localStorage.getItem('quizthumbnail');
     const questions = getData;
