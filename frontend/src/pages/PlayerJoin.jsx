@@ -1,3 +1,4 @@
+// File Checked
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { postMethodOptions } from '../options';
@@ -11,7 +12,6 @@ export default () => {
   const history = useHistory();
 
   const submit = async (e) => {
-    console.log(session);
     e.preventDefault();
     const newBody = {
       name,
@@ -21,8 +21,6 @@ export default () => {
 
     if (response.status === 200) {
       const response2 = await response.json();
-      console.log('Worked success');
-      console.log(response2.playerId);
       history.push(`/playsession/:${response2.playerId}`);
     } else {
       document.getElementById('email').className = 'form-control is-invalid bg-transparent';
@@ -57,6 +55,7 @@ export default () => {
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
               placeholder="Enter your name"
               value={name}
+              aria-label="Enter your name"
             />
           </label>
           <br />
@@ -69,6 +68,7 @@ export default () => {
               value={session}
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
               placeholder="Enter Session ID"
+              aria-label="Enter Session ID"
             />
           </label>
           <div className="w-full d-flex justify-content-center">
