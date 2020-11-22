@@ -86,7 +86,7 @@ function QuizCard({
           quizId={quizId}
         />
         <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={advanceQuizButtonHandler} aria-label="Advance Quiz">Next Question</button>
-        <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={stopQuizButtonHandler} aria-label="Stop Quiz">Stop Quiz</button>
+        <button id="endQ" className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={stopQuizButtonHandler} aria-label="Stop Quiz">Stop Quiz</button>
       </div>
     );
   }
@@ -101,7 +101,7 @@ function QuizCard({
         />
         <button className="w-half btn btn-primary btn-rounded my-5" type="button" onClick={editQuizButtonHandler} aria-label="Edit Quiz">Edit</button>
         <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={deleteQuizButtonHandler} aria-label="Delete Quiz">Delete</button>
-        <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
+        <button id="startQ" className="w-half btn btn-success btn-rounded my-5" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>

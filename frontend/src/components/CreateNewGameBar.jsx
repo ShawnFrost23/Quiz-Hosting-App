@@ -39,6 +39,7 @@ function CreateNewGameBar({ setGameFunction }) {
           onChange={(e) => setNewGameName(e.target.value)}
           type="text"
           id="name"
+          name="GameName"
           placeholder="Enter New Game Name"
           className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
         />

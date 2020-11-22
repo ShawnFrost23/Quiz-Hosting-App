@@ -27,7 +27,7 @@ export default () => {
   return (
     <>
       <div className="h-50 d-flex justify-content-center align-items-center bg-dark">
-        <button className="w-quarter btn btn-secondary btn-rounded btn-lg mx-5" type="button" onClick={handleLogOut}>Log Out</button>
+        <button id="logOut" className="w-quarter btn btn-secondary btn-rounded btn-lg mx-5" type="button" onClick={handleLogOut}>Log Out</button>
         <button className="w-quarter btn btn-secondary btn-rounded btn-lg mx-5" type="button" onClick={handleDashBoard}>Dashboard</button>
       </div>
     </>
