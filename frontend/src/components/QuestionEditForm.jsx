@@ -1,3 +1,4 @@
+// File Checked
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
@@ -31,7 +32,6 @@ export default function EditForm() {
       const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, getMethodOptions);
       if (response.status === 200) {
         const response2 = await response.json();
-        console.log(response2);
         setQues(response2);
         setGetData(response2.questions[id2]);
         setOrgData(response2.questions[id2].answers);
@@ -87,7 +87,6 @@ export default function EditForm() {
     if (response.status === 200) {
       const response2 = await response.json();
       console.log(response2);
-      console.log('PLEASE WORK');
     }
   }
 
@@ -208,7 +207,7 @@ export default function EditForm() {
           <br />
           <input type="submit" value="Done" />
           <br />
-          <button type="button" onClick={backToQ}>Back to Questions!</button>
+          <button type="button" onClick={backToQ} aria-label="Back to Dashboard">Back to Questions!</button>
         </form>
       </div>
     </>
