@@ -1,3 +1,4 @@
+// File Checked
 import React from 'react';
 import NavBar from '../components/NavBar';
 // eslint-disable-next-line
