@@ -127,25 +127,18 @@ export default function EditForm() {
       });
     });
 
-    console.log(ques.questions[id2]);
-
     correctArray.forEach((newCorrect) => {
       copyOfState.questions[id2].answers.forEach((oldCorrect, index) => {
         if (oldCorrect.id === newCorrect.id) {
           copyOfState.questions[id2].answers[index].correct = newCorrect.correct;
-          if ((copyOfState.questions[id2].answers[index].correct === 'true') && (copyOfState.questions[id2].answers[index].text !== ' ')) cCount += 1;
+          if ((copyOfState.questions[id2].answers[index].correct === 'true') && (copyOfState.questions[id2].answers[index].text !== '')) cCount += 1;
         }
       });
     });
 
-    console.log(cCount);
     if (checkValidity(type, cCount, aCount)) {
       putQuiz(ques);
-      console.log('checkValid is true');
-      console.log(cCount, type);
     }
-    console.log('returns false');
-    // putQuiz(ques);
   };
 
   return (

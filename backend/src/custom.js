@@ -16,8 +16,6 @@ export const quizQuestionPublicReturn = question => {
 export const quizQuestionGetCorrectAnswers = question => {
   // For a single answer
   const ans = [];
-  console.log(question.answers.length);
-  console.log(question.answers[0]);
   for (let i = 0; i < question.answers.length; i++) {
     if (question.answers[i].correct === 'true') {
       ans.push(question.answers[i].id);
@@ -32,7 +30,12 @@ export const quizQuestionGetCorrectAnswers = question => {
  all of the answers, correct or incorrect.
 */
 export const quizQuestionGetAnswers = question => {
-  return question.answers;
+  const ans = [];
+  for (let i = 0; i < question.answers.length; i++) {
+    ans.push(question.answers[i].id);
+  }
+  console.log(ans);
+  return ans;
 };
 
 /*

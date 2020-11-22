@@ -3,7 +3,10 @@
 import React from 'react';
 import ReactdownClock from 'react-countdown-clock';
 import { useParams } from 'react-router-dom';
+// import halfmoon from 'halfmoon';
 import AnswerOption from '../components/AnswerOption';
+import 'halfmoon/css/halfmoon-variables.min.css';
+// import { PropTypes } from 'prop-types';
 
 export default () => {
   let { id1 } = useParams();
@@ -14,9 +17,11 @@ export default () => {
   const [status, setStatus] = React.useState(false);
   const [answers, setAnswers] = React.useState([]);
   const [prevq, setPrevQ] = React.useState([]);
+  // const [oldAns, setoldAns] = React.useState([]);
   // const [rightAns, setRightAns] = React.useState('');
   const [ansRight, setAnsRight] = React.useState([]);
-  const [nextAns, setNextAns] = React.useState(true);
+  const [nextAns, setNextAns] = React.useState(false);
+  const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
   React.useEffect(() => {
     async function getStatus() {
@@ -29,10 +34,9 @@ export default () => {
       });
       if (response.status === 200) {
         setStatus(true);
-        console.log(response);
       }
     }
-    if ((id1) && (!status)) {
+    if (!status) {
       getStatus();
     }
   }, [id1, status]);
@@ -51,6 +55,7 @@ export default () => {
         setQuestions(response2.question);
         setAnswers(response2.question.answers);
         setPrevQ(response2.question);
+        setNextAns(true);
       }
     }
     if (status) {
@@ -59,43 +64,29 @@ export default () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  React.useEffect(() => {
-    console.log('here');
-    async function getAnswer() {
-      const response = await fetch(`${BASE_URL}/play/${id1}/answer`, {
-        headers: {
-          accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'GET',
-      });
-      if (response.status === 200) {
-        // const response2 = await response.json();
-        setAnsRight(await response.json().answerIds);
-        console.log(ansRight);
-        // etRightAns(response2.answerIds); // fails
-        // console.log(response2);
-        // console.log(response2.answerIds);
-        // console.log(rightAns);
-      }
+  async function getAnswer() {
+    const response = await fetch(`${BASE_URL}/play/${id1}/answer`, {
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    });
+    if (response.status === 200) {
+      const response2 = await response.json();
+      setAnsRight(response2.answerIds);
     }
-    if (nextAns) {
-      getAnswer();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nextAns]);
-
-  const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+  }
 
   async function myCallback() {
-    setNextAns(true);
-    // if (nextAns) {
-    //   // do sometng
-    // }
-    // console.log(ansRight);
+    if (nextAns) {
+      getAnswer();
+      console.log(ansRight);
+    }
+    // halfmoon.toggleModal('modal-1');
     let seaching = true;
     while (seaching) {
-      await sleep(2000);
+      await sleep(5000);
 
       const response = await fetch(`${BASE_URL}/play/${id1}/question`, {
         headers: {
@@ -104,43 +95,62 @@ export default () => {
         },
         method: 'GET',
       });
-
-      console.log(response.status);
-
       if (response.status === 200) {
         const response2 = await response.json();
         if (prevq.title !== response2.question.title) {
           setQuestions(response2.question);
           setAnswers(response2.question.answers);
           setPrevQ(response2.question);
+          setNextAns(true);
           seaching = false;
+          // halfmoon.toggleModal('modal-1');
         }
       }
     }
   }
 
+  if (!nextAns) {
+    myCallback();
+  }
+
   return (
-    <>
-      <ReactdownClock
-        seconds={questions.time}
-        color="#000"
-        alpha={0.9}
-        size={50}
-        onComplete={myCallback}
-      />
-      <br />
-      <div>
-        {questions.title}
-      </div>
-      <br />
-      <img src={questions.thumbnail} alt="Pic for question" />
-      <br />
-      <div>
-        Points Value:
-        {questions.score}
-      </div>
-      <div>
-        {
+    <div>
+      {/* <div className="modal" id="modal-1" tabIndex="-1" role="dialog">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <span aria-hidden="true">&times;</span>
+            <h5 className="modal-title">Modal title</h5>
+            <p>
+              This is a test.
+              {' '}
+              {ansRight}
+            </p>
+            <div className="text-right mt-20" />
+          </div>
+        </div>
+      </div> */}
+      <div className="page-wrapper">
+        <div className="content-wrapper">
+          <ReactdownClock
+            seconds={questions.time}
+            color="#000"
+            alpha={0.9}
+            size={50}
+            onComplete={myCallback}
+          />
+          <br />
+          <div>
+            {questions.title}
+          </div>
+          <br />
+          <img src={questions.thumbnail} alt="Pic for question" />
+          <br />
+          <div>
+            Points Value:
+            {questions.score}
+          </div>
+          <div>
+            {
         answers.map((q) => (
           <AnswerOption
             key={q.id}
@@ -149,7 +159,9 @@ export default () => {
           />
         ))
       }
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
