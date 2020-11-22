@@ -18,6 +18,7 @@ export default () => {
   const [questions, setQuestions] = React.useState([]);
   const [answers, setAnswers] = React.useState([]);
   const [prevq, setPrevQ] = React.useState([]);
+  // eslint-disable-next-line
   const [ansRight, setAnsRight] = React.useState([]);
   const timerReset = React.useRef(null);
   const timerStart = React.useRef(null);
