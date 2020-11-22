@@ -1,3 +1,4 @@
+// File Checked
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-loop-func */
 import React from 'react';
@@ -15,7 +16,6 @@ export default () => {
   localStorage.setItem('player', id1);
   const BASE_URL = 'http://localhost:5005';
   const [questions, setQuestions] = React.useState([]);
-  // const [status, setStatus] = React.useState(false);
   const [answers, setAnswers] = React.useState([]);
   const [prevq, setPrevQ] = React.useState([]);
   const [ansRight, setAnsRight] = React.useState([]);
@@ -41,7 +41,6 @@ export default () => {
   async function myPoll() {
     if (nextAns) {
       getAnswer();
-      console.log(ansRight);
       handleShow();
     }
     let seaching = true;
