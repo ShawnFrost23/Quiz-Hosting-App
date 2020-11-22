@@ -1,3 +1,4 @@
+// File Checked
 import React from 'react';
 import { postMethodOptions } from '../options';
 // eslint-disable-next-line
@@ -43,7 +44,7 @@ function CreateNewGameBar({ setGameFunction }) {
           className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
         />
       </form>
-      <button className="btn btn-primary btn-rounded" type="submit" onClick={handleNewGameButton}>Create New Game</button>
+      <button className="btn btn-primary btn-rounded" type="submit" onClick={handleNewGameButton} aria-label="New Quiz">Create New Game</button>
     </div>
   );
 }
