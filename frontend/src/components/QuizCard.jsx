@@ -47,12 +47,6 @@ function QuizCard({
     await setQuizState(true);
   };
 
-  // function saveToClip() {
-  //   const url = 'wwwnwnoi';
-  //   url.select();
-  //   document.execCommand('copy');
-  // }
-
   const startQuizButtonHandler = async () => {
     postMethodOptions.headers.Authorization = localStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}/start`, postMethodOptions);
