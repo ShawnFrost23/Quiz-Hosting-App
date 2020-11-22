@@ -63,6 +63,7 @@ export default () => {
             <input
               onChange={(e) => setEmail(e.target.value)}
               type="text"
+              name="email"
               id="email"
               value={email}
               placeholder="Enter Email"
@@ -76,6 +77,7 @@ export default () => {
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               id="password"
+              name="password"
               value={password}
               placeholder="Enter Password"
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"
@@ -88,6 +90,7 @@ export default () => {
               onChange={(e) => setName(e.target.value)}
               type="text"
               id="name"
+              name="name"
               value={name}
               placeholder="Enter Name"
               className="w-full form-control border-top-0 border-left-0 border-right-0 rounded-0 bg-transparent"

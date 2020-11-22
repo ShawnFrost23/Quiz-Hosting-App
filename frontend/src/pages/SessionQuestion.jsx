@@ -3,7 +3,6 @@
 import React from 'react';
 import ReactdownClock from 'react-countdown-clock';
 import { useParams } from 'react-router-dom';
-// import halfmoon from 'halfmoon';
 import AnswerOption from '../components/AnswerOption';
 import 'halfmoon/css/halfmoon-variables.min.css';
 // import { PropTypes } from 'prop-types';

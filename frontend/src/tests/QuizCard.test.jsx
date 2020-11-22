@@ -54,7 +54,7 @@ test('If no props passed Edit Button should not render', () => {
 
 test('If no props passed Delete Button should not render', () => {
   const wrapper = shallow(<QuizCard />);
-  const dBtn = <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={noop} aria-label="Delete Quiz">Delete</button>
+  const dBtn = <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={noop} aria-label="Delete Quiz">Delete</button>;
   expect(wrapper.contains(dBtn)).toEqual(false);
 });
 
