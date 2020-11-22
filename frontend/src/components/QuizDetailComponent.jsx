@@ -1,3 +1,4 @@
+// File Checked
 import React from 'react';
 import { getMethodOptions } from '../options';
 
