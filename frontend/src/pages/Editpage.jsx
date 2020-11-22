@@ -49,7 +49,7 @@ export default () => {
     const newQ = {
       id: length,
       title: 'New Question',
-      thumbnail: null,
+      thumbnail: '',
       time: 30,
       type: 'Single',
       answers: [
@@ -173,19 +173,19 @@ export default () => {
     <>
       <NavBar />
       <div className="w-full h-50 d-flex justify-content-center align-items-center bg-light">
-        <button className="w-quarter btn btn-primary btn-rounded" type="button" onClick={addQuestion} aria-label="Add Question">Add Questions!</button>
+        <button className="w-auto btn btn-primary btn-rounded" type="button" onClick={addQuestion} aria-label="Add Question">Add Questions!</button>
       </div>
       <div className="w-full h-50 d-flex justify-content-center align-items-center bg-light">
-        <form name="imageUpload">
+        <form className="w-half" name="imageUpload">
           <input name="uploadFile" type="file" />
         </form>
-        <button className="btn btn-primary btn-rounded" type="button" onClick={uploadFileButtonHandler} aria-label="Upload Image">Upload Image For Quiz</button>
+        <button className="btn btn-primary btn-rounded" type="button" onClick={uploadFileButtonHandler} aria-label="Upload Image">Upload Image</button>
       </div>
       <div className="w-full h-50 d-flex justify-content-center align-items-center bg-light">
-        <form name="questionUpload">
+        <form className="w-half" name="questionUpload">
           <input name="uploadJSON" type="file" />
         </form>
-        <button className="btn btn-primary btn-rounded" type="button" onClick={uploadQuestionButtonHandler} aria-label="Upload Questions">Upload Questions For Quiz</button>
+        <button className="btn btn-primary btn-rounded" type="button" onClick={uploadQuestionButtonHandler} aria-label="Upload Questions">Upload Questions</button>
       </div>
       <div className="w-full h-auto d-flex flex-wrap bg-dark">
         { getData.map((q) => (
