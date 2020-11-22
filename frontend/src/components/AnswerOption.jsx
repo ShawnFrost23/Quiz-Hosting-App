@@ -1,8 +1,7 @@
+// File checked
 import React from 'react';
 import PropTypes from 'prop-types';
 import { putMethodOptions } from '../options';
-// import { useParams } from 'react-router-dom';
-// import './index.css';
 
 const id1 = localStorage.getItem('player');
 const BASE_URL = 'http://localhost:5005';
@@ -17,7 +16,7 @@ export default function AnswerOption(props) {
     putMethodOptions.headers.accept = 'application/json';
     const response = await fetch(`${BASE_URL}/play/${id1}/answer`, putMethodOptions);
     if (response.status === 200) {
-      console.log('yay');
+      console.log(response);
     }
   }
 
