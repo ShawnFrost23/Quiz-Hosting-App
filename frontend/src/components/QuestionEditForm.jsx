@@ -2,13 +2,13 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
 import AnswerCard from './AnswersCard';
+import { getMethodOptions, putMethodOptions } from '../options';
 
 const answersArray = [];
 const correctArray = [];
 // let arrayOfAnswer = [];
 
 export default function EditForm() {
-  // const { id, title, thumbnail } = props;
   const history = useHistory();
   const ber = localStorage.getItem('token');
   const BASE_URL = 'http://localhost:5005';
@@ -26,16 +26,12 @@ export default function EditForm() {
 
   React.useEffect(() => {
     async function getQuiz() {
-      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
-        headers: {
-          accept: 'application/json',
-          Authorization: ber,
-          'Content-Type': 'application/json',
-        },
-        method: 'GET',
-      });
+      getMethodOptions.headers.Authorization = ber;
+      getMethodOptions.headers.accept = 'application/json';
+      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, getMethodOptions);
       if (response.status === 200) {
         const response2 = await response.json();
+        console.log(response2);
         setQues(response2);
         setGetData(response2.questions[id2]);
         setOrgData(response2.questions[id2].answers);
@@ -84,15 +80,10 @@ export default function EditForm() {
   }
 
   async function putQuiz(newBody) {
-    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
-      body: JSON.stringify(newBody),
-      headers: {
-        accept: 'application/json',
-        Authorization: ber,
-        'Content-Type': 'application/json',
-      },
-      method: 'PUT',
-    });
+    putMethodOptions.headers.Authorization = ber;
+    putMethodOptions.headers.accept = 'application/json';
+    putMethodOptions.body = JSON.stringify(newBody);
+    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, putMethodOptions);
     if (response.status === 200) {
       const response2 = await response.json();
       console.log(response2);

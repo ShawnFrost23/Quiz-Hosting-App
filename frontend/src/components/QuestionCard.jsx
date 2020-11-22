@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
+import { putMethodOptions, getMethodOptions } from '../options';
 
 export default function QuestionCard(props) {
   const history = useHistory();
@@ -12,15 +13,11 @@ export default function QuestionCard(props) {
   id1 = id1.substring(1);
 
   React.useEffect(() => {
+    getMethodOptions.headers.Authorization = ber;
+    getMethodOptions.headers.accept = 'application/json';
+
     async function getQuiz() {
-      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
-        headers: {
-          accept: 'application/json',
-          Authorization: ber,
-          'Content-Type': 'application/json',
-        },
-        method: 'GET',
-      });
+      const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, getMethodOptions);
       if (response.status === 200) {
         const response2 = await response.json();
         setGetData(response2.questions);
@@ -33,19 +30,13 @@ export default function QuestionCard(props) {
   }, [ber, id1]);
 
   async function putQuiz(newBody) {
-    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, {
-      body: JSON.stringify(newBody),
-      headers: {
-        accept: 'application/json',
-        Authorization: ber,
-        'Content-Type': 'application/json',
-      },
-      method: 'PUT',
-    });
+    putMethodOptions.headers.Authorization = ber;
+    putMethodOptions.headers.accept = 'application/json';
+    putMethodOptions.body = JSON.stringify(newBody);
+    const response = await fetch(`${BASE_URL}/admin/quiz/${id1}`, putMethodOptions);
     if (response.status === 200) {
       const response2 = await response.json();
       console.log(response2);
-      console.log('PLEASE WORK');
     }
   }
 
@@ -55,7 +46,18 @@ export default function QuestionCard(props) {
     history.push(`/editquestion/:${id1}/:${id2}`);
   };
   const DeleteQuestion = async (e) => {
-    getData.splice(e.target.id, 1);
+    let index = 0;
+    let index2 = 0;
+    getData.forEach((question) => {
+      console.log(question.id);
+      console.log(e.target.id);
+      if (question.id === e.target.id) {
+        console.log('here');
+        index2 = index;
+      }
+      index += 1;
+    });
+    getData.splice(index2, 1);
     const name = localStorage.getItem('quizname');
     const thumbnail = localStorage.getItem('quizthumbnail');
     const questions = getData;
@@ -69,20 +71,25 @@ export default function QuestionCard(props) {
   };
 
   const { id, title, thumbnail } = props;
+  const altText = `Picture for question ${id}`;
   return (
     <>
-      <div>{title}</div>
-      <img src={thumbnail} alt="this is a pic" />
-      <button id={id} type="button" onClick={onClickRoutePage}>Edit</button>
-      <button id={id} type="button" onClick={DeleteQuestion}>Delete</button>
-      <br />
+      <div className="d-flex justify-content-around align-items-center flex-column w-400 h-500 mx-20 my-20 px-5 py-5 border rounded bg-light">
+        <h3>{title}</h3>
+        <img className="w-full h-half border rounded" src={thumbnail} alt={altText} />
+        <button className="w-half btn btn-primary btn-rounded" id={id} type="button" onClick={onClickRoutePage} aria-label="Edit Question">Edit</button>
+        <button className="w-half btn btn-danger btn-rounded" id={id} type="button" onClick={DeleteQuestion} aria-label="Delete Question">Delete</button>
+      </div>
     </>
-
   );
 }
 
 QuestionCard.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string,
+};
+
+QuestionCard.defaultProps = {
+  thumbnail: null,
 };

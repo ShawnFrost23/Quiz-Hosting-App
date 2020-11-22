@@ -13,9 +13,11 @@ function QuizDetailComponent({ quizId }) {
       const response = await fetch(`${BASE_URL}/admin/quiz/${quizId}`, getMethodOptions);
       const response2 = await response.json();
       setNumQuestions(response2.questions.length);
+      let time = 0;
       response2.questions.forEach((question) => {
-        setTotalTime(totalTime + question.time);
+        time += parseInt(question.time, 10);
       });
+      setTotalTime(time);
     }
     getQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps

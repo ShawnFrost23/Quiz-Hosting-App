@@ -10,6 +10,8 @@ import QuizDetailComponent from './QuizDetailComponent';
 
 const BASE_URL = 'http://localhost:5005';
 
+require('halfmoon/css/halfmoon-variables.min.css');
+
 function QuizCard({
   id, quizName, thumbnail, setGameFunction, status, getListofGames,
 }) {
@@ -99,7 +101,7 @@ function QuizCard({
         />
         <button className="w-half btn btn-primary btn-rounded my-5" type="button" onClick={editQuizButtonHandler} aria-label="Edit Quiz">Edit</button>
         <button className="w-half btn btn-danger btn-rounded my-5" type="button" onClick={deleteQuizButtonHandler} aria-label="Delete Quiz">Delete</button>
-        <a href="#modal-1" className="w-half btn btn-success btn-rounded my-5" role="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</a>
+        <button className="w-half btn btn-success btn-rounded my-5" type="button" onClick={startQuizButtonHandler} aria-label="Start Quiz">Start Quiz</button>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>
