@@ -96,7 +96,7 @@ export default function EditForm() {
       return false;
     }
     if ((t === 'MCQ') && (c <= 1)) {
-      alert('Please have more than one answer for MCQ, Try Again!');
+      alert('Please have more than one right answer for MCQ, Try Again!');
       return false;
     }
     if (a < 2) {
@@ -114,6 +114,7 @@ export default function EditForm() {
     const copyOfState = ques;
 
     if (title !== '') copyOfState.questions[id2].title = title;
+    if (thumbnail !== '') copyOfState.questions[id2].thumbnail = thumbnail;
     if (type !== '') copyOfState.questions[id2].type = type;
     if (time !== '') copyOfState.questions[id2].time = time;
     if (points !== '') copyOfState.questions[id2].score = points;
@@ -182,7 +183,7 @@ export default function EditForm() {
             />
           </label>
           <br />
-          <label htmlFor="thum" value={thumbnail} onChange={(e) => setThum(e.target.files[0])}>
+          <label htmlFor="thum" value={thumbnail} onChange={(e) => setThum(e.target.value)}>
             Thumbnail
             <input
               type="url"
