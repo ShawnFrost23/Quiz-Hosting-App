@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactdownClock from 'react-countdown-clock';
 import { useParams } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal';
+// import Modal from 'react-bootstrap/Modal';
 import AnswerOption from '../components/AnswerOption';
 import { getMethodOptions } from '../options';
 
@@ -91,46 +91,49 @@ export default () => {
 
   return (
     <>
-      <div className="content-wrapper">
-        <ReactdownClock
-          seconds={questions.time}
-          color="#000"
-          alpha={0.9}
-          size={50}
-          onComplete={myCallback}
-        />
-        <br />
-        <div>
-          {questions.title}
+      <div className="w-full h-full d-flex flex-column">
+        <div className="h-100 d-flex justify-content-center align-items-center bg-light">
+          <ReactdownClock
+            seconds={questions.time}
+            color="#000"
+            alpha={0.9}
+            size={50}
+            onComplete={myCallback}
+          />
         </div>
-        <br />
-        <img src={questions.thumbnail} alt="Pic for question" />
-        <br />
-        <div>
-          Points Value:
-          {questions.score}
+        <div className="d-flex justify-content-center h-full bg-dark-light py-10 px-10">
+          <div className="d-flex flex-column h-500 w-500 bg-light px-5 py-5 border rounded">
+            <h3>
+              {questions.title}
+            </h3>
+            <img className="w-full h-half border rounded" src={questions.thumbnail} alt="Pic for question" />
+            <div>
+              Points Value:
+              {questions.score}
+            </div>
+            <div className="h-full d-flex flex-column justify-content-around align-items-center">
+              {
+                answers.map((q) => (
+                  <AnswerOption
+                    key={q.id}
+                    id={q.id}
+                    text={q.text}
+                  />
+                ))
+              }
+            </div>
+            {/* eslint-disable-next-line */}
+            {/* <Modal show={show}>
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  Correct Answer
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>{ansRight}</Modal.Body>
+              <Modal.Footer />
+            </Modal> */}
+          </div>
         </div>
-        <div>
-          {
-            answers.map((q) => (
-              <AnswerOption
-                key={q.id}
-                id={q.id}
-                text={q.text}
-              />
-            ))
-          }
-        </div>
-        {/* eslint-disable-next-line */}
-        <Modal show={show}>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              Correct Answer
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>{ansRight}</Modal.Body>
-          <Modal.Footer />
-        </Modal>
       </div>
     </>
   );
