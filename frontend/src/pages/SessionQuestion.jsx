@@ -20,7 +20,7 @@ export default () => {
   // const [oldAns, setoldAns] = React.useState([]);
   // const [rightAns, setRightAns] = React.useState('');
   const [ansRight, setAnsRight] = React.useState([]);
-  // const [nextAns, setNextAns] = React.useState(true);
+  const [nextAns, setNextAns] = React.useState(false);
   const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
   React.useEffect(() => {
@@ -55,7 +55,7 @@ export default () => {
         setQuestions(response2.question);
         setAnswers(response2.question.answers);
         setPrevQ(response2.question);
-        console.log(prevq);
+        setNextAns(true);
       }
     }
     if (status) {
@@ -79,7 +79,10 @@ export default () => {
   }
 
   async function myCallback() {
-    getAnswer();
+    if (nextAns) {
+      getAnswer();
+      console.log(ansRight);
+    }
     // halfmoon.toggleModal('modal-1');
     let seaching = true;
     while (seaching) {
@@ -98,12 +101,16 @@ export default () => {
           setQuestions(response2.question);
           setAnswers(response2.question.answers);
           setPrevQ(response2.question);
+          setNextAns(true);
           seaching = false;
           // halfmoon.toggleModal('modal-1');
         }
       }
     }
-    console.log(ansRight);
+  }
+
+  if (!nextAns) {
+    myCallback();
   }
 
   return (
@@ -125,7 +132,6 @@ export default () => {
       <div className="page-wrapper">
         <div className="content-wrapper">
           <ReactdownClock
-            defaultValue={5}
             seconds={questions.time}
             color="#000"
             alpha={0.9}
